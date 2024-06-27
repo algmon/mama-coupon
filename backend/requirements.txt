@@ -1,0 +1,7 @@
+# Core dependencies
+fastapi
+
+# Development dependencies
+
+# Testing dependencies
+pytest
