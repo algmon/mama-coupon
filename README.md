@@ -2,6 +2,11 @@
 * 下一代算法妈妈平台公共组件
 * 我们的设计模式是前后端分离，采用SaaS服务形式
 
+## alg 算法
+### 技术路线
+* language: python
+* core framework: PyTorch
+
 ## frontend 前端
 ### 技术路线
 * language: javascript
