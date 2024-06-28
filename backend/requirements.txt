@@ -1,3 +1,6 @@
+# light weight web server
+hypercorn
+
 # Core dependencies
 fastapi
 
