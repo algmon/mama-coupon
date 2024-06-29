@@ -156,3 +156,7 @@ npm run lint -- --fix
 ```
 
 Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
+
+## How to deploy
+
+- (USE) vercel
