@@ -1,9 +1,13 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from typing import Optional
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Request
+# Import your user management module here
 
-#Import your user management module here
 import user_management
+
+from aiChat import api_aiChat
 
 class User(BaseModel):
     username: str
@@ -11,6 +15,20 @@ class User(BaseModel):
     password: str
 
 app = FastAPI()
+app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
+#配置允许域名
+origins = [
+    "http://localhost:9527"
+]
+# 配置允许域名列表、允许方法、请求头、cookie等
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def root():
@@ -40,8 +58,7 @@ async def get_active_users(
 
 @app.post("/login")
 async def login_user(
-    username: str,
-    password: str,
+        request : Request
 ):
     """
     Logs in a user on the platform.
@@ -55,11 +72,16 @@ async def login_user(
     """
 
     # Authenticate the user in your user management module
+    json_data = await request.json()
+
+    username = json_data.get('username')
+    password = json_data.get('password')
     success, token = user_management.login_user_to_db("users.db", username, password)
 
-
     if success:
-        return {"message": "Login successful.", "token": token}
+        return {"message": "Login successful.", "code": 20000,"data": {
+            "token": token
+        }}
     else:
         return {"message": "Login failed."}, 401
 
@@ -115,3 +137,16 @@ async def get_users():
     users = user_management.get_users_from_db("users.db")
 
     return {"users": users}
+
+@app.get("/user/info")
+async def useInfo(reqest : Request):
+    data = {
+        "code": 20000,
+        "data": {
+            "roles": ["admin"],
+            "introduction": "I am a super administrator",
+            "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+            "name": "Super Admin"
+        }
+    }
+    return {"data": data}

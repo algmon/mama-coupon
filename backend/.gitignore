@@ -1,0 +1,10 @@
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore test and coverage reports
+.coverage
+.pytest_cache/
+
+# Ignore performance reports
+.benchmarks
