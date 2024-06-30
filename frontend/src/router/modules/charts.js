@@ -29,6 +29,12 @@ const chartsRouter = {
       component: () => import('@/views/charts/mix-chart'),
       name: 'MixChart',
       meta: { title: 'Mix Chart', noCache: true }
+    },
+    {
+      path: 'aiChat',
+      component: () => import('@/views/charts/aiChat'),
+      name: ' ',
+      meta: { title: 'aiChat', affix: true }
     }
   ]
 }
