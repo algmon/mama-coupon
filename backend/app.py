@@ -13,6 +13,7 @@ class User(BaseModel):
     username: str
     email: str
     password: str
+    phone: str
 
 app = FastAPI()
 app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
@@ -87,8 +88,7 @@ async def login_user(
 
 @app.post("/register")
 async def register_user(
-    username: str,
-    password: str,
+    request: Request
 ):
     """
     Registers a new user on the platform.
@@ -102,10 +102,15 @@ async def register_user(
     """
 
     # Register the user in your user management module
-    success = user_management.register_user_to_db("users.db", username, password)
+    data = await request.json()
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")
+    phone = data.get("phone")
+    success = user_management.register_user_to_db("users.db", username, password,email,phone)
 
     if success:
-        return {"message": "User registered successfully."}
+        return {"message": "Login successful.", "code": 20000}
     else:
         return {"message": "Registration failed."}, 400
 

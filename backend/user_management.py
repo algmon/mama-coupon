@@ -109,7 +109,7 @@ def get_users_from_db(db_path: str):
 
     return users
 
-def register_user_to_db(db_path: str, username: str, password: str):
+def register_user_to_db(db_path: str, username: str, password: str,email: str,phone: str):
     """
     Registers a new user to the database with improved security..
 
@@ -134,6 +134,8 @@ def register_user_to_db(db_path: str, username: str, password: str):
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
+            email TEXT ,
+            phone TEXT ,
             last_active DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -153,7 +155,7 @@ def register_user_to_db(db_path: str, username: str, password: str):
     token = secrets.token_urlsafe(32)
 
     # Insert the new user into the database
-    cursor.execute("INSERT INTO users (username, password_hash, token) VALUES (?, ?, ?)", (username, hashed_password, token))
+    cursor.execute("INSERT INTO users (username, password_hash, token,email,phone) VALUES (?, ?, ?,?,?)", (username, hashed_password, token,email,phone))
 
     # Commit the changes
     conn.commit()

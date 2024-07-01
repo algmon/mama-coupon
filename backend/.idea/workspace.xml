@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64e3508f-6804-41ab-88c1-a2093733ea93" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/aiChat.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/suanfamama-platform-common.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/alg.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_management.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/layout/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/layout/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/login/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +32,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../alg" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -43,7 +48,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1719743010774</updated>
-      <workItem from="1719743012068" duration="636000" />
+      <workItem from="1719743012068" duration="1250000" />
     </task>
     <servers />
   </component>
@@ -67,5 +72,9 @@
       <screen x="0" y="0" width="1260" height="792" />
     </state>
     <state x="86" y="51" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1260.792@0.0.1260.792" timestamp="1719759842701" />
+    <state x="411" y="151" key="FileChooserDialogImpl" timestamp="1719817833810">
+      <screen x="0" y="0" width="1260" height="792" />
+    </state>
+    <state x="411" y="151" key="FileChooserDialogImpl/0.0.1260.792@0.0.1260.792" timestamp="1719817833810" />
   </component>
 </project>
