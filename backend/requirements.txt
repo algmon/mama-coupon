@@ -3,6 +3,7 @@ hypercorn
 
 # Core dependencies
 fastapi
+requests
 
 # Development dependencies
 
