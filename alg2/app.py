@@ -23,9 +23,9 @@ def generate_image(prompt, negative_prompt, num_inference_steps, guidance_scale)
 interface = gr.Interface(
     fn=generate_image,
     inputs=[
-        gr.Textbox(label="Prompt"),
-        gr.Textbox(label="Negative Prompt", placeholder="Optional"),
-        gr.Slider(step=1, minimum=1, maximum=100, value=28, label="Number of Inference Steps"),
+        gr.Textbox(label="正向提示词"),
+        gr.Textbox(label="负向提示词", placeholder="Optional"),
+        gr.Slider(step=1, minimum=1, maximum=100, value=28, label="推理步数"),
         gr.Slider(minimum=1.0, maximum=20.0, step=0.1, value=7.0, label="Guidance Scale")
     ],
     outputs="image",
