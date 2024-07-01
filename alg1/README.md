@@ -1,5 +1,5 @@
 ---
-title: Suanfamama_Core_Alg
+title: Suanfamama_AIGC_alg1
 app_file: app.py
 sdk: gradio
 sdk_version: 4.29.0
