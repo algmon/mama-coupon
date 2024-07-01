@@ -65,6 +65,12 @@
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
       >Login</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        @click.native.prevent="handleRegister"
+      >Register</el-button>
 
       <div style="position: relative">
         <div class="tips">
@@ -187,8 +193,10 @@ export default {
       this.$store
         .dispatch('user/login', this.loginForm)
         .then(() => {
+          console.log(this.redirect)
           this.$router.push({
-            path: this.redirect || '/',
+            // path: this.redirect || "/",
+            path: '/documentation/index',
             query: this.otherQuery
           })
           this.loading = false
@@ -201,6 +209,17 @@ export default {
       //   return false;
       // }
       // });
+    },
+    handleRegister() {
+      // this.$refs.loginForm.validate((valid) => {
+      // if (valid) {
+      this.loading = true
+      this.$store
+      this.$router.push({
+        // path: this.redirect || "/",
+        path: '/register',
+        query: this.otherQuery
+      })
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {

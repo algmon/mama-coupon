@@ -5,13 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64e3508f-6804-41ab-88c1-a2093733ea93" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/suanfamama-platform-common.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alg/.idea/alg.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_management.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alg/flagged/log.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/views/register/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/layout/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/layout/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/documentation/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/documentation/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/login/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
