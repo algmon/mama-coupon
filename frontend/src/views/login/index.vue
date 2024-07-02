@@ -64,13 +64,15 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-      >Login</el-button>
+        >Login</el-button
+      >
       <el-button
         :loading="loading"
         type="primary"
-        style="width: 100%; margin-bottom: 30px"
+        style="width: 100%; margin-bottom: 30px; margin-left: 0px"
         @click.native.prevent="handleRegister"
-      >Register</el-button>
+        >Register</el-button
+      >
 
       <div style="position: relative">
         <div class="tips">
@@ -95,77 +97,120 @@
     <el-dialog title="Or connect with" :visible.sync="showDialog">
       Can not be simulated on local, so please combine you own business
       simulation! ! !
-      <br>
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
       <social-sign />
     </el-dialog>
+
+    <g-signin-button
+      :params="googleSignInParams"
+      @success="onSignInSuccess"
+      @error="onSignInError"
+    >
+      <div>
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico"
+          alt="描述性文字"
+          style="width: 50px; height: 50px"
+        />
+      </div>
+      <!-- Sign in with Google -->
+    </g-signin-button>
+    <!-- <g-signin-button>
+      <component
+        :is="'script'"
+        src="https://accounts.google.com/gsi/client"
+        ansyc
+      />
+      <div
+        id="g_id_onload"
+        data-client_id="852489880523-vhq5t0suv7v84faonom4ao5104sqeof1.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="googleSignCallBack"
+        data-auto_prompt="false"
+      ></div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-shape="pill"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left"
+      ></div>
+    </g-signin-button> -->
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+import { validUsername } from "@/utils/validate";
+import SocialSign from "./components/SocialSignin";
 
 export default {
-  name: 'Login',
+  name: "Login",
   components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error("Please enter the correct user name"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error("The password can not be less than 6 digits"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        username: 'yyn',
-        password: '123456'
+        username: "yyn",
+        password: "123456",
       },
       loginRules: {
         username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
+          { required: true, trigger: "blur", validator: validateUsername },
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
-        ]
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
-      passwordType: 'password',
+      passwordType: "password",
       capsTooltip: false,
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
-    }
+      otherQuery: {},
+      googleSignInParams: {
+        client_id:
+          "852489880523-vhq5t0suv7v84faonom4ao5104sqeof1.apps.googleusercontent.com",
+      },
+    };
   },
   watch: {
     $route: {
-      handler: function(route) {
-        const query = route.query
+      handler: function (route) {
+        const query = route.query;
         if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
+          this.redirect = query.redirect;
+          this.otherQuery = this.getOtherQuery(query);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
+    if (this.loginForm.username === "") {
+      this.$refs.username.focus();
+    } else if (this.loginForm.password === "") {
+      this.$refs.password.focus();
     }
   },
   destroyed() {
@@ -173,37 +218,37 @@ export default {
   },
   methods: {
     checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
+      const { key } = e;
+      this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
     },
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
       // this.$refs.loginForm.validate((valid) => {
       // if (valid) {
-      this.loading = true
+      this.loading = true;
       this.$store
-        .dispatch('user/login', this.loginForm)
+        .dispatch("user/login", this.loginForm)
         .then(() => {
-          console.log(this.redirect)
+          console.log(this.redirect);
           this.$router.push({
             // path: this.redirect || "/",
-            path: '/documentation/index',
-            query: this.otherQuery
-          })
-          this.loading = false
+            path: "/documentation/index",
+            query: this.otherQuery,
+          });
+          this.loading = false;
         })
         .catch(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
       // } else {
       //   console.log("error submit!!");
       //   return false;
@@ -213,22 +258,22 @@ export default {
     handleRegister() {
       // this.$refs.loginForm.validate((valid) => {
       // if (valid) {
-      this.loading = true
-      this.$store
+      this.loading = true;
+      this.$store;
       this.$router.push({
         // path: this.redirect || "/",
-        path: '/register',
-        query: this.otherQuery
-      })
+        path: "/register",
+        query: this.otherQuery,
+      });
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
-          acc[cur] = query[cur]
+        if (cur !== "redirect") {
+          acc[cur] = query[cur];
         }
-        return acc
-      }, {})
-    }
+        return acc;
+      }, {});
+    },
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {
     //     const code = getQueryObject(e.newValue)
@@ -247,8 +292,14 @@ export default {
     //     }
     //   }
     // }
-  }
-}
+    onSignInSuccess(googleUser) {
+      console.log(googleUser);
+    },
+    onSignInError(error) {
+      console.log("OH NOES", error);
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -365,7 +416,15 @@ $light_gray: #eee;
     right: 0;
     bottom: 6px;
   }
-
+  .g-signin-button {
+    /* This is where you control how the button looks. Be creative! */
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 6px;
+    padding: 4px 8px;
+  }
   @media only screen and (max-width: 470px) {
     .thirdparty-button {
       display: none;

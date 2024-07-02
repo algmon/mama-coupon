@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+import componentsRouter from "./modules/components";
+import chartsRouter from "./modules/charts";
+import tableRouter from "./modules/table";
+import nestedRouter from "./modules/nested";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -41,98 +41,98 @@ import nestedRouter from './modules/nested'
 // 路由
 export const constantRoutes = [
   {
-    path: '/redirect',
+    path: "/redirect",
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
+        path: "/redirect/:path(.*)",
+        component: () => import("@/views/redirect/index"),
+      },
+    ],
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    path: "/login",
+    component: () => import("@/views/login/index"),
+    hidden: true,
   },
   {
-    path: '/register',
-    component: () => import('@/views/register/index'),
-    hidden: true
+    path: "/register",
+    component: () => import("@/views/register/index"),
+    hidden: true,
   },
   {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
+    path: "/auth-redirect",
+    component: () => import("@/views/login/auth-redirect"),
+    hidden: true,
   },
   {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
+    path: "/404",
+    component: () => import("@/views/error-page/404"),
+    hidden: true,
   },
   {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
+    path: "/401",
+    component: () => import("@/views/error-page/401"),
+    hidden: true,
   },
 
   {
-    path: '/guide',
+    path: "/guide",
     component: Layout,
-    redirect: '/guide/index',
+    redirect: "/guide/index",
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Proudct Guide', icon: 'guide', noCache: true }
-      }
-    ]
+        path: "index",
+        component: () => import("@/views/guide/index"),
+        name: "Guide",
+        meta: { title: "Proudct Guide", icon: "guide", noCache: true },
+      },
+    ],
   },
 
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/dashboard',
+    redirect: "/dashboard",
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'AIGC Dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
+        path: "dashboard",
+        component: () => import("@/views/dashboard/index"),
+        name: "Dashboard",
+        meta: { title: "AIGC Dashboard", icon: "dashboard", affix: true },
+      },
+    ],
   },
 
   {
-    path: '/documentation',
+    path: "/documentation",
     component: Layout,
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: ' ',
-        meta: { title: 'Docs', icon: 'documentation', affix: true }
-      }
-    ]
+        path: "index",
+        component: () => import("@/views/documentation/index"),
+        name: " ",
+        meta: { title: "Docs", icon: "documentation", affix: true },
+      },
+    ],
   },
 
   {
-    path: '/profile',
+    path: "/profile",
     component: Layout,
-    redirect: '/profile/index',
+    redirect: "/profile/index",
     hidden: true,
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
-      }
-    ]
-  }
-]
+        path: "index",
+        component: () => import("@/views/profile/index"),
+        name: "Profile",
+        meta: { title: "Profile", icon: "user", noCache: true },
+      },
+    ],
+  },
+];
 
 /**
  * asyncRoutes
@@ -140,58 +140,58 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/permission',
+    path: "/permission",
     component: Layout,
-    redirect: '/permission/page',
+    redirect: "/permission/page",
     alwaysShow: true, // will always show the root menu
-    name: 'Permission',
+    name: "Permission",
     meta: {
-      title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      title: "Permission",
+      icon: "lock",
+      roles: ["admin", "editor"], // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
+        path: "page",
+        component: () => import("@/views/permission/page"),
+        name: "PagePermission",
         meta: {
-          title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
+          title: "Page Permission",
+          roles: ["admin"], // or you can only set roles in sub nav
+        },
       },
       {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
+        path: "directive",
+        component: () => import("@/views/permission/directive"),
+        name: "DirectivePermission",
         meta: {
-          title: 'Directive Permission'
+          title: "Directive Permission",
           // if do not set roles, means: this page does not require permission
-        }
+        },
       },
       {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
+        path: "role",
+        component: () => import("@/views/permission/role"),
+        name: "RolePermission",
         meta: {
-          title: 'Role Permission',
-          roles: ['admin']
-        }
-      }
-    ]
+          title: "Role Permission",
+          roles: ["admin"],
+        },
+      },
+    ],
   },
 
   {
-    path: '/icon',
+    path: "/icon",
     component: Layout,
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
+        path: "index",
+        component: () => import("@/views/icons/index"),
+        name: "Icons",
+        meta: { title: "Icons", icon: "icon", noCache: true },
+      },
+    ],
   },
 
   /** when your routing map is too long, you can split it into small modules **/
@@ -200,123 +200,127 @@ export const asyncRoutes = [
   tableRouter,
 
   {
-    path: '/tab',
+    path: "/tab",
     component: Layout,
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/tab/index'),
-        name: 'Tab',
-        meta: { title: 'Tab', icon: 'tab' }
-      }
-    ]
+        path: "index",
+        component: () => import("@/views/tab/index"),
+        name: "Tab",
+        meta: { title: "Tab", icon: "tab" },
+      },
+    ],
   },
 
   {
-    path: '/error',
+    path: "/error",
     component: Layout,
-    redirect: 'noRedirect',
-    name: 'ErrorPages',
+    redirect: "noRedirect",
+    name: "ErrorPages",
     meta: {
-      title: 'Error Pages',
-      icon: '404'
+      title: "Error Pages",
+      icon: "404",
     },
     children: [
       {
-        path: '401',
-        component: () => import('@/views/error-page/401'),
-        name: 'Page401',
-        meta: { title: '401', noCache: true }
+        path: "401",
+        component: () => import("@/views/error-page/401"),
+        name: "Page401",
+        meta: { title: "401", noCache: true },
       },
       {
-        path: '404',
-        component: () => import('@/views/error-page/404'),
-        name: 'Page404',
-        meta: { title: '404', noCache: true }
-      }
-    ]
+        path: "404",
+        component: () => import("@/views/error-page/404"),
+        name: "Page404",
+        meta: { title: "404", noCache: true },
+      },
+    ],
   },
 
   {
-    path: '/error-log',
+    path: "/error-log",
     component: Layout,
     children: [
       {
-        path: 'log',
-        component: () => import('@/views/error-log/index'),
-        name: 'ErrorLog',
-        meta: { title: 'Error Log', icon: 'bug' }
-      }
-    ]
+        path: "log",
+        component: () => import("@/views/error-log/index"),
+        name: "ErrorLog",
+        meta: { title: "Error Log", icon: "bug" },
+      },
+    ],
   },
 
   {
-    path: '/excel',
+    path: "/excel",
     component: Layout,
-    redirect: '/excel/export-excel',
-    name: 'Excel',
+    redirect: "/excel/export-excel",
+    name: "Excel",
     meta: {
-      title: 'Excel',
-      icon: 'excel'
+      title: "Excel",
+      icon: "excel",
     },
     children: [
       {
-        path: 'export-excel',
-        component: () => import('@/views/excel/export-excel'),
-        name: 'ExportExcel',
-        meta: { title: 'Export Excel' }
+        path: "export-excel",
+        component: () => import("@/views/excel/export-excel"),
+        name: "ExportExcel",
+        meta: { title: "Export Excel" },
       },
       {
-        path: 'export-selected-excel',
-        component: () => import('@/views/excel/select-excel'),
-        name: 'SelectExcel',
-        meta: { title: 'Export Selected' }
+        path: "export-selected-excel",
+        component: () => import("@/views/excel/select-excel"),
+        name: "SelectExcel",
+        meta: { title: "Export Selected" },
       },
       {
-        path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
-        name: 'MergeHeader',
-        meta: { title: 'Merge Header' }
+        path: "export-merge-header",
+        component: () => import("@/views/excel/merge-header"),
+        name: "MergeHeader",
+        meta: { title: "Merge Header" },
       },
       {
-        path: 'upload-excel',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'UploadExcel',
-        meta: { title: 'Upload Excel' }
-      }
-    ]
+        path: "upload-excel",
+        component: () => import("@/views/excel/upload-excel"),
+        name: "UploadExcel",
+        meta: { title: "Upload Excel" },
+      },
+    ],
   },
 
   {
-    path: '/theme',
+    path: "/theme",
     component: Layout,
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/theme/index'),
-        name: 'Theme',
-        meta: { title: 'Theme', icon: 'theme' }
-      }
-    ]
+        path: "index",
+        component: () => import("@/views/theme/index"),
+        name: "Theme",
+        meta: { title: "Theme", icon: "theme" },
+      },
+    ],
+  },
+  {
+    path: "/fashion",
+    component: () => import("@/views/fashion-video/index"),
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+  { path: "*", redirect: "/404", hidden: true },
+];
 
 const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
-  })
+    routes: constantRoutes,
+  });
 
-const router = createRouter()
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
+export default router;

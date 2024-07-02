@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64e3508f-6804-41ab-88c1-a2093733ea93" name="变更" comment="add features：exception and response of common.">
-      <change afterPath="$PROJECT_DIR$/common/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/error_code.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/exception.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/resp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aiChat.py" beforeDir="false" afterPath="$PROJECT_DIR$/aiChat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_management.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/charts/aiChat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/charts/aiChat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/login/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/register/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/register/index.vue" afterDir="false" />
     </list>
-    <list id="d52a0784-d2c2-4969-ab15-d719b58865dd" name="忽略" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list id="d52a0784-d2c2-4969-ab15-d719b58865dd" name="忽略" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,20 +24,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/.idea/workspace.xml">
-      <ranges>
-        <range start1="6" end1="25" start2="6" end2="21" changelist="64e3508f-6804-41ab-88c1-a2093733ea93" />
-        <range start1="30" end1="30" start2="26" end2="33" changelist="d52a0784-d2c2-4969-ab15-d719b58865dd" />
-        <range start1="46" end1="46" start2="49" end2="50" changelist="d52a0784-d2c2-4969-ab15-d719b58865dd" />
-        <range start1="78" end1="78" start2="82" end2="86" changelist="64e3508f-6804-41ab-88c1-a2093733ea93" />
-        <range start1="80" end1="81" start2="88" end2="89" changelist="d52a0784-d2c2-4969-ab15-d719b58865dd" />
-        <range start1="83" end1="83" start2="91" end2="92" changelist="d52a0784-d2c2-4969-ab15-d719b58865dd" />
-        <range start1="84" end1="84" start2="93" end2="97" changelist="64e3508f-6804-41ab-88c1-a2093733ea93" />
-        <range start1="88" end1="88" start2="101" end2="117" changelist="64e3508f-6804-41ab-88c1-a2093733ea93" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -113,10 +88,10 @@
       <screen x="0" y="0" width="1260" height="792" />
     </state>
     <state x="467" y="187" key="#待办事项/0.0.1260.792/2520.0.1920.1080@0.0.1260.792" timestamp="1719900884550" />
-    <state x="298" y="0" key="CommitChangelistDialog2" timestamp="1719900632781">
+    <state x="298" y="0" key="CommitChangelistDialog2" timestamp="1719904573424">
       <screen x="0" y="0" width="1260" height="792" />
     </state>
-    <state x="298" y="0" key="CommitChangelistDialog2/0.0.1260.792/2520.0.1920.1080@0.0.1260.792" timestamp="1719900632781" />
+    <state x="298" y="0" key="CommitChangelistDialog2/0.0.1260.792/2520.0.1920.1080@0.0.1260.792" timestamp="1719904573424" />
     <state x="411" y="151" key="FileChooserDialogImpl" timestamp="1719817833810">
       <screen x="0" y="0" width="1260" height="792" />
     </state>
@@ -129,10 +104,10 @@
       <screen x="0" y="0" width="1260" height="792" />
     </state>
     <state x="483" y="310" key="VCS.ChangelistChooser/0.0.1260.792/2520.0.1920.1080@0.0.1260.792" timestamp="1719900473865" />
-    <state x="223" y="129" key="Vcs.Push.Dialog.v2" timestamp="1719900456323">
+    <state x="223" y="129" key="Vcs.Push.Dialog.v2" timestamp="1719901161280">
       <screen x="0" y="0" width="1260" height="792" />
     </state>
-    <state x="223" y="129" key="Vcs.Push.Dialog.v2/0.0.1260.792/2520.0.1920.1080@0.0.1260.792" timestamp="1719900456323" />
+    <state x="223" y="129" key="Vcs.Push.Dialog.v2/0.0.1260.792/2520.0.1920.1080@0.0.1260.792" timestamp="1719901161280" />
     <state x="332" y="0" width="594" height="792" key="find.popup" timestamp="1719896502842">
       <screen x="0" y="0" width="1260" height="792" />
     </state>

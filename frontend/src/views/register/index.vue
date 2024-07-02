@@ -96,62 +96,61 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleRegister"
-      >注册</el-button>
-
-      <!-- 其他元素 -->
+        >注册</el-button
+      >
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate' // 确保这个路径是 validate 函数的正确路径
-import SvgIcon from '@/components/SvgIcon' // 确保 SvgIcon 组件路径正确
-import * as userApi from '@/api/user' // 确保 SvgIcon 组件路径正确
+import { validUsername } from "@/utils/validate"; // 确保这个路径是 validate 函数的正确路径
+import SvgIcon from "@/components/SvgIcon"; // 确保 SvgIcon 组件路径正确
+import * as userApi from "@/api/user"; // 确保 SvgIcon 组件路径正确
 export default {
-  name: 'Register',
+  name: "Register",
   components: {
-    SvgIcon
+    SvgIcon,
   },
   data() {
     return {
-      passwordType: 'password',
+      passwordType: "password",
       registerForm: {
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
       },
       registerRules: {
         username: [
-          { required: true, trigger: 'blur', validator: validUsername }
+          { required: true, trigger: "blur", validator: validUsername },
         ],
         email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
           {
-            type: 'email',
-            message: '请输入有效的邮箱地址',
-            trigger: ['blur', 'change']
-          }
+            type: "email",
+            message: "请输入有效的邮箱地址",
+            trigger: ["blur", "change"],
+          },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '密码长度不能小于6位', trigger: 'blur' }
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 6, message: "密码长度不能小于6位", trigger: "blur" },
         ],
         confirmPassword: [
-          { required: true, message: '请确认密码', trigger: 'blur' },
-          { validator: this.confirmPasswordValidator, trigger: 'blur' }
+          { required: true, message: "请确认密码", trigger: "blur" },
+          { validator: this.confirmPasswordValidator, trigger: "blur" },
         ],
         phone: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { required: true, message: "请输入手机号", trigger: "blur" },
           {
             pattern: /^1[3-9]\d{9}$/,
-            message: '请输入有效的手机号',
-            trigger: 'blur'
-          }
-        ]
+            message: "请输入有效的手机号",
+            trigger: "blur",
+          },
+        ],
       },
-      loading: false
-    }
+      loading: false,
+    };
   },
   methods: {
     showPwd() {
@@ -162,28 +161,28 @@ export default {
       userApi
         .register(this.registerForm)
         .then((response) => {
-          console.log('12')
+          console.log("12");
         })
         .catch((error) => {
           // 打印错误信息
-          console.error('注册失败:' + error.response.data)
+          console.error("注册失败:" + error.response.data);
 
           // 检查错误响应中的状态码
           if (error.response && error.response.status === 501) {
             // 错误码为 501，提示手机号或邮箱已注册
-            alert(error.response.data.detail)
+            alert(error.response.data.detail);
           }
-        })
+        });
     },
     confirmPasswordValidator(rule, value, callback) {
       if (value !== this.registerForm.password) {
-        callback(new Error('两次输入密码不一致!'))
+        callback(new Error("两次输入密码不一致!"));
       } else {
-        callback()
+        callback();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
