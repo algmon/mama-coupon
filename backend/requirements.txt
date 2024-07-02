@@ -4,6 +4,7 @@ hypercorn
 # Core dependencies
 fastapi
 requests
+boto3
 
 # Development dependencies
 
