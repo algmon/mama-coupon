@@ -2,6 +2,10 @@ import datetime
 import sqlite3
 import hashlib
 import secrets
+from fastapi import FastAPI, HTTPException
+
+from common.exception import exception
+
 
 def get_active_users_from_db(db_path: str, start_date: str = None, end_date: str = None):
     """
@@ -143,10 +147,11 @@ def register_user_to_db(db_path: str, username: str, password: str,email: str,ph
     # Check if the username already exists
     cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
     user = cursor.fetchone()
-
-    if user:
-        # Username already exists
-        return False
+    cursor.execute("SELECT * FROM users WHERE phone = ?", (phone,))
+    userPhone = cursor.fetchone()
+    if user or userPhone:
+     # Username already exists
+      exception(501 , "Username or phone already exists")
 
     # Hash the password using SHA-256
     hashed_password = hashlib.sha256(password.encode()).hexdigest()

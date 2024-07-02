@@ -22,8 +22,8 @@ export default {
     getAnswer() {
       var data = { issue: this.issue }
       chat.fetchAnswer(data).then((response) => {
-        this.answer = response.answer
-        console.log(answer)
+        this.answer = response.data.answer
+        console.log(response)
       })
     }
   }

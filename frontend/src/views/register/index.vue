@@ -159,9 +159,21 @@ export default {
     },
     handleRegister() {
       // 注册逻辑
-      userApi.register(this.registerForm).then((response) => {
-        console.log('12')
-      })
+      userApi
+        .register(this.registerForm)
+        .then((response) => {
+          console.log('12')
+        })
+        .catch((error) => {
+          // 打印错误信息
+          console.error('注册失败:' + error.response.data)
+
+          // 检查错误响应中的状态码
+          if (error.response && error.response.status === 501) {
+            // 错误码为 501，提示手机号或邮箱已注册
+            alert(error.response.data.detail)
+          }
+        })
     },
     confirmPasswordValidator(rule, value, callback) {
       if (value !== this.registerForm.password) {
