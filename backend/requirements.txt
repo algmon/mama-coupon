@@ -5,6 +5,7 @@ hypercorn
 fastapi
 requests
 boto3
+scikit-learn
 
 # Development dependencies
 
