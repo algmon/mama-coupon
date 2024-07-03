@@ -1,7 +1,18 @@
 {
     "$schema": "https://railway.app/railway.schema.json",
     "build": {
-      "builder": "NIXPACKS"
+      "builder": "NIXPACKS",
+      "nixpacks": {
+        "phases": {
+          "install": {
+            "nixpkgs": ["git", "git-lfs"],
+            "cmds": [
+              "git lfs install",
+              "git lfs pull"
+            ]
+          }
+        }
+      }
     },
     "deploy": {
       "startCommand": "hypercorn app:app --bind \"[::]:$PORT\""
