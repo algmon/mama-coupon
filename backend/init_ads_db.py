@@ -72,7 +72,7 @@ def connect_and_add_ads(db_path: str, ads: list):
 
 def connect_and_clear_ads(db_path: str):
     """
-    Connects to a SQLite database and clears all ads from the ads table.
+    TODO: Fix Connects to a SQLite database and clears all ads from the ads table.
 
     Args:
         db_path: The path to the SQLite database file.
@@ -109,7 +109,19 @@ def connect_and_list_ads(db_path: str):
 # Specify the path to your SQLite database file
 db_path = "ads.db"
 
-# Create a list of ads to add
+# Create a list of gen ads
+ads = []
+NUM_ADS_GEN = 999999
+
+for i in range(NUM_ADS_GEN):
+    ad = {
+        "adname": f"ad_{i+1}",
+        "creator": f"creator_{i+1}",
+        "object-url": f""  # Replace with your actual URL pattern
+    }
+    ads.append(ad)
+
+'''
 ads = [
     {"adname": "ad1", "creator": "creator a", "object-url": ""},
     {"adname": "ad2", "creator": "creator b", "object-url": ""},
@@ -117,7 +129,9 @@ ads = [
     {"adname": "ad4", "creator": "creator d", "object-url": ""},
     {"adname": "ad5", "creator": "creator e", "object-url": ""},
 ]
+'''
 
-connect_and_create_tables(db_path)
-connect_and_add_ads(db_path, ads)
+#connect_and_clear_ads(db_path)
+#connect_and_create_tables(db_path)
+#connect_and_add_ads(db_path, ads)
 connect_and_list_ads(db_path)

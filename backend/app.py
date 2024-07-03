@@ -6,6 +6,7 @@ from fastapi import Request
 
 import user_management
 import ad_management
+import recommendation_management
 
 from aiChat import api_aiChat
 
@@ -14,6 +15,11 @@ class User(BaseModel):
     email: str
     password: str
     phone: str
+
+class Ad(BaseModel):
+    adname: str
+    creator: str
+    object_url: str
 
 app = FastAPI()
 app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
@@ -33,11 +39,11 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome! You reach the Suanfamama Cognitive Computational Advertising Platform Backend."}
+    return {"message": "Welcome! You reach the Suanfamama Cognitive Computational Advertising Platform Backend with Improved Stability and Security."}
 
 
 # User Management
-@app.get("/active_users")
+@app.get("/users/active_users")
 async def get_active_users(
     start_date: Optional[str] = None,
     end_date: Optional[str] = None,
@@ -55,14 +61,12 @@ async def get_active_users(
 
     # Get active users from your user management module
     #active_users = user_management.get_active_users(start_date, end_date)
-    active_users = user_management.get_active_users_from_db("users.db", start_date, end_date)
+    active_users = user_management.get_active_users_from_db("..db/users.db", start_date, end_date)
 
     return {"active_users": len(active_users)}
 
-@app.post("/login")
-async def login_user(
-        request : Request
-):
+@app.post("/users/login")
+async def login_user(request : Request):
     """
     Logs in a user on the platform.
 
@@ -79,7 +83,7 @@ async def login_user(
 
     username = json_data.get('username')
     password = json_data.get('password')
-    success, token = user_management.login_user_to_db("users.db", username, password)
+    success, token = user_management.login_user_to_db("../db/users.db", username, password)
 
     if success:
         return {"message": "Login successful.", "code": 20000,"data": {
@@ -88,10 +92,8 @@ async def login_user(
     else:
         return {"message": "Login failed."}, 401
 
-@app.post("/register")
-async def register_user(
-    request: Request
-):
+@app.post("/users/register")
+async def register_user(request: Request):
     """
     Registers a new user on the platform.
 
@@ -109,14 +111,14 @@ async def register_user(
     email = data.get("email")
     password = data.get("password")
     phone = data.get("phone")
-    success = user_management.register_user_to_db("users.db", username, password,email,phone)
+    success = user_management.register_user_to_db("../db/users.db", username, password,email,phone)
 
     if success:
         return {"message": "Login successful.", "code": 20000}
     else:
         return {"message": "Registration failed."}, 400
 
-@app.get("/total_users")
+@app.get("/users/total_users")
 async def get_total_users():
     """
     Returns the total number of users on the platform.
@@ -124,26 +126,26 @@ async def get_total_users():
     Returns:
         A JSON response with the total number of users.
     """
-
     # Get total users from your user management module
-    total_users = user_management.get_total_users_from_db("users.db")
-
-
+    total_users = user_management.get_total_users_from_db("../db/users.db")
     return {"total_users": total_users}
 
-@app.get("/users")
-async def get_users():
+@app.get("/users/{user_id}")
+async def get_specific_user(user_id: str):
     """
-    Returns a list of all users on the platform.
+    Returns a specific user on the platform.
+
+    Args:
+        user_id: The ID of the user.
 
     Returns:
-        A JSON response with a list of users.
+        A JSON response with the user details.
     """
-
-    # Get all users from your user management module
-    users = user_management.get_users_from_db("users.db")
-
-    return {"users": users}
+    user = user_management.get_spcific_user_from_db("../db/users.db", int(user_id))
+    if user:
+        return {"user": user}
+    else:
+        return {"message": "User not found."}, 404
 
 @app.get("/user/info")
 async def useInfo(reqest : Request):
@@ -159,7 +161,7 @@ async def useInfo(reqest : Request):
     return {"data": data}
 
 # Ad Management
-@app.get("/total_ads")
+@app.get("/ads/total_ads")
 async def get_total_ads():
     """
     Returns the total number of ads on the platform.
@@ -167,17 +169,40 @@ async def get_total_ads():
     Returns:
         A JSON response with the total number of ads.
     """
-    total_ads = ad_management.get_total_ads_from_db("ads.db")
+    total_ads = ad_management.get_total_ads_from_db("../db/ads.db")
     return {"total_ads": total_ads}
 
 # Ad Management
-@app.get("/ads")
-async def get_ads():
+@app.get("/ads/{ad_id}")
+async def get_specific_ad(ad_id: str):
     """
-    Returns a list of all ads on the platform.
+    Returns a specific ad on the platform.
+
+    Args:
+        ad_id: The ID of the ad.
+
+    Returns:
+        A JSON response with the ad details.
+    """
+    ad = ad_management.get_spcific_ad_from_db("../db/ads.db", int(ad_id))
+    if ad:
+        return {"ad": ad}
+    else:
+        return {"message": "Ad not found."}, 404
+
+# Recommendation Management
+@app.get("/match/{user_id}")
+async def get_matches_for_specifc_user(user_id):
+    """
+    Returns a list of matches for a specific user at specific time on the platform.
+
+    Args:
+        user_id: The ID of the user.
 
     Returns:
         A JSON response with a list of ads.
     """
-    ads = ad_management.get_ads_from_db("ads.db")
-    return {"ads": ads}
+    total_ads = ad_management.get_total_ads_from_db("../db/ads.db")
+    num_ads_recommend = 11 # TODO: ADD to global config
+    matches = recommendation_management.match_for_specific_user(user_id, total_ads, num_ads_recommend)
+    return {"matches": matches}

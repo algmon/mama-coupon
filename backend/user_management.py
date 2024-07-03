@@ -207,3 +207,33 @@ def login_user_to_db(db_path: str, username: str, password: str):
         return True, token
     else:
         return False, None
+    
+def get_spcific_user_from_db(db_path: str, user_id: int):
+    """
+    Gets a specific user from a SQLite database based on its ID.
+
+    Args:
+        db_path: The path to the SQLite database file.
+        user_id: The ID of the user to retrieve.
+
+    Returns:
+        A dictionary representing the user, or None if the user is not found.
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Execute the query to get the specific user
+    cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+
+    # Fetch the result
+    row = cursor.fetchone()
+
+    # Close the database connection
+    conn.close()
+
+    if row:
+        # Convert the row to a dictionary
+        user = dict(id=row[0], username=row[1], password=row[2], token=row[3], last_active=row[4])
+        return user
+    else:
+        return None

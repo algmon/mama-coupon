@@ -33,6 +33,7 @@ def get_ads(db_path: str):
 def match(users: list, ads: list):
     """
     Matches(认知) users with ads based on 用户动态画像 and 计算广告动态画像.
+    TODO: In the context of big data, too slow. Needs to be optimized.
 
     Args:
         users (list): A list of user dictionaries.
@@ -61,39 +62,34 @@ def match(users: list, ads: list):
 
     return matches
 
-    '''
-    # alg1: cosine similarity
+def match_for_specific_user(user_id: str, total_num_ads_avaiable: int, num_ads_recommend: int):
+    """
+    Matches(认知) a specific user with ads based on 用户动态画像 and 计算广告动态画像.
 
-    # Convert user and ad data to pandas DataFrames
-    users_df = pd.DataFrame(users)
-    ads_df = pd.DataFrame(ads)
+    Args:
+        user_id:
+        total_num_ads_avaiable:
+        recommend:
 
-    print(users_df)
-    print(ads_df)
+    Returns:
+        list: A list of user-ad matches.
+    """
+    # Create a list to store user-ad matches
+    matches = []
+    random_ads_ids = []
 
-    # Calculate cosine similarity between user interests and ad keywords
-    similarities = cosine_similarity(users_df["interests"], ads_df["keywords"])
+    # alg0: recommend ads, randomly
+    random_ads_ids = random.sample(range(1, total_num_ads_avaiable + 1), num_ads_recommend)
+    random_ads_ids = [str(ad_id) for ad_id in random_ads_ids]  # Convert to string
 
-    # Iterate through users and find their top matching ads
-    for user_index, user in enumerate(users):
-        # Get the similarity scores for the current user
-        user_similarities = similarities[user_index]
+    # Create a match dictionary for the user and their randomly selected ads
+    match = {
+        "user_id": user_id,
+        "matched_ads": random_ads_ids,
+        "num_ads_returned": num_ads_recommend
+    }
 
-        # Sort ads by similarity score in descending order
-        sorted_ads = ads_df.sort_values(by=user_similarities, ascending=False)
-
-        # Get the top 5 matching ads
-        top_ads = sorted_ads[:5]
-
-        # Create a match dictionary for the user and their top ads
-        match = {
-            "user_id": user["user_id"],
-            "matched_ads": top_ads.to_dict(orient="records")
-        }
-
-        # Append the match to the matches list
-        matches.append(match)
+    # Append the match to the matches list
+    matches.append(match)
 
     return matches
-    '''
-

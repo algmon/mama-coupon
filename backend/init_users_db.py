@@ -111,7 +111,7 @@ def connect_and_add_users(db_path: str, users: list):
 
 def connect_and_clear_users(db_path: str):
     """
-    Connects to a SQLite database and clears all users from the users table.
+    TODO: Fix Connects to a SQLite database and clears all users from the users table.
 
     Args:
         db_path: The path to the SQLite database file.
@@ -154,7 +154,7 @@ def connect_and_list_users(db_path: str):
 
     # Print the users
     for user in users:
-        print(f"ID: {user[0]}, Username: {user[1]}, Password: {user[2]}, Token: {user[3]}, Last Active: {user[4]}")
+        print(f"ID: {user[0]}, Username: {user[1]}, Password: {user[2]}, Last Active: {user[4]}")
 
     # Close the database connection
     conn.close()
@@ -162,17 +162,27 @@ def connect_and_list_users(db_path: str):
 # Specify the path to your SQLite database file
 db_path = "users.db"
 
-# Create a list of users to add
+# Create a list of gen users
+users = []
+NUM_USERS_GEN = 999999
+
+for i in range(NUM_USERS_GEN):
+    user = {
+        "username": f"user_{i+1}",
+        "password": f"password{i+1}"
+    }
+    users.append(user)
+
+'''
+# Create a list of users
 users = [
     {"username": "user1", "password": "password123"},
     {"username": "user2", "password": "password456"},
     {"username": "user3", "password": "password789"},
 ]
+'''
 
-#TODO fix connect_and_clear_users(db_path)
-#TODO fix connect_and_drop_tables(db_path)
-
-connect_and_create_tables(db_path)
-connect_and_add_users(db_path, users)
-
+#connect_and_clear_users(db_path)
+#connect_and_create_tables(db_path)
+#connect_and_add_users(db_path, users)
 connect_and_list_users(db_path)

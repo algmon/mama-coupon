@@ -25,7 +25,7 @@ This example starts up a [FastAPI](https://fastapi.tiangolo.com/) server.
 
 ## How to deploy
 
-- (USE) railway
+- (TBA)
 
 ## 📝 Notes
 

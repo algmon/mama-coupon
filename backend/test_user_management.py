@@ -16,6 +16,7 @@ def mocker(request):
         ("test_user3", "password3"),
     ],
 )
+
 def test_register_user_to_db_success(mocker, username, password):
     """
     TODO: Fix Test that the `register_user_to_db` function successfully registers a new user.
