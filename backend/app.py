@@ -61,7 +61,7 @@ async def get_active_users(
 
     # Get active users from your user management module
     #active_users = user_management.get_active_users(start_date, end_date)
-    active_users = user_management.get_active_users_from_db("..db/users.db", start_date, end_date)
+    active_users = user_management.get_active_users_from_db("./db/users.db", start_date, end_date)
 
     return {"active_users": len(active_users)}
 
@@ -83,7 +83,7 @@ async def login_user(request : Request):
 
     username = json_data.get('username')
     password = json_data.get('password')
-    success, token = user_management.login_user_to_db("../db/users.db", username, password)
+    success, token = user_management.login_user_to_db("./db/users.db", username, password)
 
     if success:
         return {"message": "Login successful.", "code": 20000,"data": {
@@ -111,7 +111,7 @@ async def register_user(request: Request):
     email = data.get("email")
     password = data.get("password")
     phone = data.get("phone")
-    success = user_management.register_user_to_db("../db/users.db", username, password,email,phone)
+    success = user_management.register_user_to_db("./db/users.db", username, password,email,phone)
 
     if success:
         return {"message": "Login successful.", "code": 20000}
@@ -127,7 +127,7 @@ async def get_total_users():
         A JSON response with the total number of users.
     """
     # Get total users from your user management module
-    total_users = user_management.get_total_users_from_db("../db/users.db")
+    total_users = user_management.get_total_users_from_db("./db/users.db")
     return {"total_users": total_users}
 
 @app.get("/users/{user_id}")
@@ -141,7 +141,7 @@ async def get_specific_user(user_id: str):
     Returns:
         A JSON response with the user details.
     """
-    user = user_management.get_spcific_user_from_db("../db/users.db", int(user_id))
+    user = user_management.get_spcific_user_from_db("./db/users.db", int(user_id))
     if user:
         return {"user": user}
     else:
@@ -169,7 +169,7 @@ async def get_total_ads():
     Returns:
         A JSON response with the total number of ads.
     """
-    total_ads = ad_management.get_total_ads_from_db("../db/ads.db")
+    total_ads = ad_management.get_total_ads_from_db("./db/ads.db")
     return {"total_ads": total_ads}
 
 # Ad Management
@@ -184,7 +184,7 @@ async def get_specific_ad(ad_id: str):
     Returns:
         A JSON response with the ad details.
     """
-    ad = ad_management.get_spcific_ad_from_db("../db/ads.db", int(ad_id))
+    ad = ad_management.get_spcific_ad_from_db("./db/ads.db", int(ad_id))
     if ad:
         return {"ad": ad}
     else:
@@ -202,7 +202,7 @@ async def get_matches_for_specifc_user(user_id):
     Returns:
         A JSON response with a list of ads.
     """
-    total_ads = ad_management.get_total_ads_from_db("../db/ads.db")
+    total_ads = ad_management.get_total_ads_from_db("./db/ads.db")
     num_ads_recommend = 11 # TODO: ADD to global config
     matches = recommendation_management.match_for_specific_user(user_id, total_ads, num_ads_recommend)
     return {"matches": matches}
