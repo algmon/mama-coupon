@@ -1,2 +1,4 @@
 db/users.db filter=lfs diff=lfs merge=lfs -text
 db/ads.db filter=lfs diff=lfs merge=lfs -text
+backend/db/ads.db filter=lfs diff=lfs merge=lfs -text
+backend/db/users.db filter=lfs diff=lfs merge=lfs -text
