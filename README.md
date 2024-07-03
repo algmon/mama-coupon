@@ -2,7 +2,7 @@
 * https://www.aigc.suanfamama.com
 * 平台公共组件
 
-## alg 算法
+## alg 核心算法
 ### 技术路线
 * language: python
 * core framework: PyTorch
