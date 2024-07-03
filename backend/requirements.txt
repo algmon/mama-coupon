@@ -6,6 +6,7 @@ fastapi
 requests
 boto3
 scikit-learn
+pandas
 
 # Development dependencies
 
