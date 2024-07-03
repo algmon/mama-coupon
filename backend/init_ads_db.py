@@ -114,6 +114,8 @@ ads = [
     {"adname": "ad1", "creator": "creator a", "object-url": ""},
     {"adname": "ad2", "creator": "creator b", "object-url": ""},
     {"adname": "ad3", "creator": "creator c", "object-url": ""},
+    {"adname": "ad4", "creator": "creator d", "object-url": ""},
+    {"adname": "ad5", "creator": "creator e", "object-url": ""},
 ]
 
 connect_and_create_tables(db_path)

@@ -3,9 +3,9 @@ from typing import Optional
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
-# Import your user management module here
 
 import user_management
+import ad_management
 
 from aiChat import api_aiChat
 
@@ -33,8 +33,10 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the 算法妈妈 User Management Module with Improved Security"}
+    return {"message": "Welcome! You reach the Suanfamama Cognitive Computational Advertising Platform Backend."}
 
+
+# User Management
 @app.get("/active_users")
 async def get_active_users(
     start_date: Optional[str] = None,
@@ -155,3 +157,27 @@ async def useInfo(reqest : Request):
         }
     }
     return {"data": data}
+
+# Ad Management
+@app.get("/total_ads")
+async def get_total_ads():
+    """
+    Returns the total number of ads on the platform.
+
+    Returns:
+        A JSON response with the total number of ads.
+    """
+    total_ads = ad_management.get_total_ads_from_db("ads.db")
+    return {"total_ads": total_ads}
+
+# Ad Management
+@app.get("/ads")
+async def get_ads():
+    """
+    Returns a list of all ads on the platform.
+
+    Returns:
+        A JSON response with a list of ads.
+    """
+    ads = ad_management.get_ads_from_db("ads.db")
+    return {"ads": ads}
