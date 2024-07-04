@@ -162,6 +162,19 @@ async def useInfo(reqest : Request):
     return {"data": data}
 
 # Ad Management
+@app.get("/ads/active_ads")
+async def get_active_ads():
+    """
+    TODO: Returns a list of active ads on the platform.
+
+    An ad is considered active if its 'object-url' field is not empty.
+
+    Returns:
+        A JSON response with a list of active ads.
+    """
+    active_ads = ad_management.get_active_ads_from_db("./db/ads.db")
+    return {"active_ads": active_ads}
+
 @app.get("/ads/total_ads")
 async def get_total_ads():
     """
@@ -226,6 +239,24 @@ async def update_specific_ad(request: Request):
         return {"message": "Ad updated successfully.", "code": 200}
     else:
         return {"message": "Ad update failed."}, 400
+
+# Advertiser Management
+@app.get("/advertisers/active_advertisers")
+async def get_active_advertisers(
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+):
+    """
+    Returns the number of active advertisers within a specified date range.
+
+    Args:
+        start_date: Optional start date in YYYY-MM-DD format.
+        end_date: Optional end date in YYYY-MM-DD format.
+
+    Returns:
+        A JSON response with the number of active advertisers.
+    """
+    pass
 
 # Recommendation Management
 @app.get("/match/{user_id}")
