@@ -257,10 +257,10 @@ async def get_active_advertisers(start_date: Optional[str] = None, end_date: Opt
     """
     pass
 
-@app.post("/advertisers/create_an_image")
-async def create_ad_image(request: Request):
+@app.post("/advertisers/create_an_ad")
+async def create_an_ad(request: Request):
     """
-    Creates a new ad image on the platform.
+    Creates a new ad on the platform.
 
     Args:
         prompt:
@@ -279,7 +279,7 @@ async def create_ad_image(request: Request):
         #negative_prompt = "hands and face"
 
         # Create an ad image
-        success = advertiser_management.create_ad_image(prompt, negative_prompt)
+        success = advertiser_management.create_an_ad(prompt, negative_prompt)
 
         if success:
             return JSONResponse(

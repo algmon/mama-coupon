@@ -114,7 +114,7 @@ def send_generation_request(host, params,):
         files["none"] = ''
 
     # Send request
-    print(f"Sending REST request to Suanfamama AIGC Image Generation Engine ...")
+    print(f"Sending REST request to Suanfamama AIGC Ad Generation Engine ...")
     response = requests.post(
         host,
         headers=headers,
@@ -126,12 +126,12 @@ def send_generation_request(host, params,):
 
     return response
 
-def create_ad_image(prompt: str, negative_prompt: str):
+def create_an_ad(prompt: str, negative_prompt: str):
     """
     TODO: 
     """
     aspect_ratio = "16:9" #@param ["21:9", "16:9", "3:2", "5:4", "1:1", "4:5", "2:3", "9:16", "9:21"]
-    seed = 7 #@param {type:"integer"}
+    seed = 9 #@param {type:"integer"} TODO: to be configurable
     output_format = "png" #@param ["jpeg", "png"]
 
     host = f"https://api.stability.ai/v2beta/stable-image/generate/sd3"
@@ -161,9 +161,9 @@ def create_ad_image(prompt: str, negative_prompt: str):
         raise Warning("Generation failed NSFW classifier")
 
     # Save and display result
-    generated = "./imgs/" + f"Suanfamama_AIGC_Image_{seed}.{output_format}"
+    generated = "./ads/" + f"Suanfamama_AIGC_Ad_{seed}.{output_format}"
     with open(generated, "wb") as f:
         f.write(output_image)
     print(f"Saved image {generated}")
-    
+
     return output_image
