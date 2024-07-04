@@ -1,5 +1,6 @@
 # 算法妈妈AIGC认知计算广告生成平台
 * https://www.aigc.suanfamama.com
+* 所属行业：Cognitive Computational Advertising
 * 平台公共组件
 
 ## alg 核心算法
