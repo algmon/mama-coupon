@@ -89,7 +89,7 @@ def get_spcific_ad_from_db(db_path: str, ad_id: int):
     else:
         return None
 
-def update_ad(db_path: str, ad_id: int, ad_data: dict):
+def update_ad(db_path: str, ad_data: dict):
     """
     Updates an existing ad in the database.
 

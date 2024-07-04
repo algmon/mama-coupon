@@ -106,6 +106,7 @@ def connect_and_list_ads(db_path: str):
 
     conn.close()
 
+
 # Specify the path to your SQLite database file
 db_path = "ads.db"
 
@@ -120,6 +121,7 @@ for i in range(NUM_ADS_GEN):
         "object-url": f""  # Replace with your actual URL pattern
     }
     ads.append(ad)
+
 
 '''
 ads = [

@@ -86,11 +86,11 @@ async def login_user(request : Request):
     success, token = user_management.login_user_to_db("./db/users.db", username, password)
 
     if success:
-        return {"message": "Login successful.", "code": 20000,"data": {
+        return {"message": "User Login successful.", "code": 200,"data": {
             "token": token
         }}
     else:
-        return {"message": "Login failed."}, 401
+        return {"message": "User Login failed."}, 401
 
 @app.post("/users/register")
 async def register_user(request: Request):
@@ -99,13 +99,14 @@ async def register_user(request: Request):
 
     Args:
         username: The username of the new user.
+        email: The email of the new user.
         password: The password of the new user.
+        phone: The phone number of the new user.
 
     Returns:
         A JSON response with the status of the registration.
     """
 
-    # Register the user in your user management module
     data = await request.json()
     username = data.get("username")
     email = data.get("email")
@@ -114,7 +115,7 @@ async def register_user(request: Request):
     success = user_management.register_user_to_db("./db/users.db", username, password,email,phone)
 
     if success:
-        return {"message": "Login successful.", "code": 20000}
+        return {"message": "User Registration successful.", "code": 200}
     else:
         return {"message": "Registration failed."}, 400
 
@@ -150,7 +151,7 @@ async def get_specific_user(user_id: str):
 @app.get("/user/info")
 async def useInfo(reqest : Request):
     data = {
-        "code": 20000,
+        "code": 200,
         "data": {
             "roles": ["admin"],
             "introduction": "I am a super administrator",
@@ -172,7 +173,6 @@ async def get_total_ads():
     total_ads = ad_management.get_total_ads_from_db("./db/ads.db")
     return {"total_ads": total_ads}
 
-# Ad Management
 @app.get("/ads/{ad_id}")
 async def get_specific_ad(ad_id: str):
     """
@@ -189,6 +189,43 @@ async def get_specific_ad(ad_id: str):
         return {"ad": ad}
     else:
         return {"message": "Ad not found."}, 404
+
+@app.post("/ads/update")
+async def update_specific_ad(request: Request):
+    """
+    Updates a specific ad on the platform.
+
+    Args:
+        ad_id:
+        adname:
+        creator:
+        object_url:
+
+    Returns:
+        A JSON response with the status of the update.
+    """
+    # Get the updated ad data from the request body
+    json_data = await request.json()
+
+    ad_id = json_data.get('ad_id')
+    adname = json_data.get('adname')
+    creator = json_data.get('creator')
+    object_url = json_data.get('object_url')
+    
+    ad_data = {
+        "adname": adname,
+        "creator": creator,
+        "object_url": object_url,
+        "ad_id": ad_id
+    }
+
+    # Update the ad in your ad management module
+    success = ad_management.update_ad("./db/ads.db", ad_data)
+
+    if success:
+        return {"message": "Ad updated successfully.", "code": 200}
+    else:
+        return {"message": "Ad update failed."}, 400
 
 # Recommendation Management
 @app.get("/match/{user_id}")

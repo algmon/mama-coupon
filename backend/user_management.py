@@ -113,7 +113,7 @@ def get_users_from_db(db_path: str):
 
     return users
 
-def register_user_to_db(db_path: str, username: str, password: str,email: str,phone: str):
+def register_user_to_db(db_path: str, username: str, password: str, email: str, phone: str):
     """
     Registers a new user to the database with improved security..
 
@@ -121,6 +121,8 @@ def register_user_to_db(db_path: str, username: str, password: str,email: str,ph
         db_path: The path to the SQLite database file.
         username: The username of the new user.
         password: The password of the new user.
+        email: The email of the new user.
+        phone: The phone of the new user.
 
     Returns:
         True if the registration is successful, False otherwise.
