@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from typing import Optional
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
 
 import user_management
+import advertiser_management
 import ad_management
 import recommendation_management
 
@@ -242,12 +244,9 @@ async def update_specific_ad(request: Request):
 
 # Advertiser Management
 @app.get("/advertisers/active_advertisers")
-async def get_active_advertisers(
-    start_date: Optional[str] = None,
-    end_date: Optional[str] = None,
-):
+async def get_active_advertisers(start_date: Optional[str] = None, end_date: Optional[str] = None,):
     """
-    Returns the number of active advertisers within a specified date range.
+    TODO: Returns the number of active advertisers within a specified date range.
 
     Args:
         start_date: Optional start date in YYYY-MM-DD format.
@@ -257,6 +256,46 @@ async def get_active_advertisers(
         A JSON response with the number of active advertisers.
     """
     pass
+
+@app.post("/advertisers/create_an_image")
+async def create_ad_image(request: Request):
+    """
+    Creates a new ad image on the platform.
+
+    Args:
+        prompt:
+        negative_prompt:
+
+    Returns:
+        A JSON response with the status of the creation.
+    """
+    try:
+        # Get data from the request body
+        json_data = await request.json()
+        prompt = json_data.get('prompt')
+        negative_prompt = json_data.get('negative_prompt')
+
+        #prompt = "a dog"
+        #negative_prompt = "hands and face"
+
+        # Create an ad image
+        success = advertiser_management.create_ad_image(prompt, negative_prompt)
+
+        if success:
+            return JSONResponse(
+                status_code=200,
+                content={"message": "Ad image created successfully.", "code": 200, "data": {}}
+            )
+        else:
+            return JSONResponse(
+                status_code=400,
+                content={"message": "Ad image creation failed."}
+            )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": f"Error creating ad image: {e}"}
+        )
 
 # Recommendation Management
 @app.get("/match/{user_id}")

@@ -1,15 +1,14 @@
-import datetime
-import sqlite3
-import hashlib
-import secrets
+import os
+from gradio_client import Client
 from fastapi import FastAPI, HTTPException
+import requests
 
 from common.exception import exception
 
 
 def get_active_advertisers_from_db(db_path: str, start_date: str = None, end_date: str = None):
     """
-    Gets a list of active advertisers from a SQLite database within a specified date range.
+    TODO: Gets a list of active advertisers from a SQLite database within a specified date range.
 
     Args:
         db_path: The path to the SQLite database file.
@@ -26,7 +25,7 @@ def get_active_advertisers_from_db(db_path: str, start_date: str = None, end_dat
 
 def get_total_advertisers_from_db(db_path: str):
     """
-    Gets the total number of advertisers from a SQLite database.
+    TODO: Gets the total number of advertisers from a SQLite database.
 
     Args:
         db_path: The path to the SQLite database file.
@@ -38,7 +37,7 @@ def get_total_advertisers_from_db(db_path: str):
 
 def get_advertisers_from_db(db_path: str):
     """
-    Gets a list of advertisers from a SQLite database.
+    TODO: Gets a list of advertisers from a SQLite database.
 
     Args:
         db_path: The path to the SQLite database file.
@@ -54,7 +53,7 @@ def get_advertisers_from_db(db_path: str):
 
 def register_advertiser_to_db(db_path: str, advertisername: str, password: str):
     """
-    Registers a new advertiser to the database with improved security..
+    TODO: Registers a new advertiser to the database with improved security..
 
     Args:
         db_path: The path to the SQLite database file.
@@ -68,7 +67,7 @@ def register_advertiser_to_db(db_path: str, advertisername: str, password: str):
 
 def login_advertiser_to_db(db_path: str, advertisername: str, password: str):
     """
-    Logs in a advertiser on the platform using the database.
+    TODO: Logs in a advertiser on the platform using the database.
 
     Args:
         advertisername: The advertisername of the advertiser.
@@ -81,7 +80,7 @@ def login_advertiser_to_db(db_path: str, advertisername: str, password: str):
 
 def get_spcific_advertiser_from_db(db_path: str, advertiser_id: int):
     """
-    Gets a specific advertiser from a SQLite database based on its ID.
+    TODO: Gets a specific advertiser from a SQLite database based on its ID.
 
     Args:
         db_path: The path to the SQLite database file.
@@ -91,3 +90,80 @@ def get_spcific_advertiser_from_db(db_path: str, advertiser_id: int):
         A dictionary representing the advertiser, or None if the advertiser is not found.
     """
     pass
+
+def send_generation_request(host, params,):
+    """
+    TODO: 
+    """
+    STABILITY_API_KEY = os.environ["STABILITY_API_KEY"]
+
+    headers = {
+        "Accept": "image/*",
+        "Authorization": f"Bearer {STABILITY_API_KEY}"
+    }
+
+    # Encode parameters
+    files = {}
+    image = params.pop("image", None)
+    mask = params.pop("mask", None)
+    if image is not None and image != '':
+        files["image"] = open(image, 'rb')
+    if mask is not None and mask != '':
+        files["mask"] = open(mask, 'rb')
+    if len(files)==0:
+        files["none"] = ''
+
+    # Send request
+    print(f"Sending REST request to Suanfamama AIGC Image Generation Engine ...")
+    response = requests.post(
+        host,
+        headers=headers,
+        files=files,
+        data=params
+    )
+    if not response.ok:
+        raise Exception(f"HTTP {response.status_code}: {response.text}")
+
+    return response
+
+def create_ad_image(prompt: str, negative_prompt: str):
+    """
+    TODO: 
+    """
+    aspect_ratio = "16:9" #@param ["21:9", "16:9", "3:2", "5:4", "1:1", "4:5", "2:3", "9:16", "9:21"]
+    seed = 7 #@param {type:"integer"}
+    output_format = "png" #@param ["jpeg", "png"]
+
+    host = f"https://api.stability.ai/v2beta/stable-image/generate/sd3"
+
+    params = {
+        "prompt" : prompt,
+        "negative_prompt" : negative_prompt,
+        "aspect_ratio" : aspect_ratio,
+        "seed" : seed,
+        "output_format" : output_format,
+        "model" : "sd3-large",
+        "mode" : "text-to-image"
+    }
+
+    response = send_generation_request(
+        host,
+        params
+    )
+
+    # Decode response
+    output_image = response.content
+    finish_reason = response.headers.get("finish-reason")
+    seed = response.headers.get("seed")
+
+    # Check for NSFW classification
+    if finish_reason == 'CONTENT_FILTERED':
+        raise Warning("Generation failed NSFW classifier")
+
+    # Save and display result
+    generated = "./imgs/" + f"Suanfamama_AIGC_Image_{seed}.{output_format}"
+    with open(generated, "wb") as f:
+        f.write(output_image)
+    print(f"Saved image {generated}")
+    
+    return output_image

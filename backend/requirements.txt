@@ -7,6 +7,7 @@ requests
 boto3
 scikit-learn
 pandas
+gradio_client
 
 # Development dependencies
 
