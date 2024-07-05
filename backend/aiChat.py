@@ -6,7 +6,7 @@ import user_management
 from common.resp import SuccessResponseData
 
 api_aiChat = APIRouter()
-
+#url
 url = "https://api.link-ai.tech/v1/chat/completions"
 headers = {
     "Content-Type": "application/json",
