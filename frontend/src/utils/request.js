@@ -14,14 +14,31 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // do something before request is sent
+    // // 获取所有的cookie
+    const cookies = document.cookie.split(';')
 
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+    console.log('cookies:', cookies)
+
+    for (let i = 0; i < cookies.length; i++) {
+      // 去除每个cookie字符串的首尾空白字符
+      const cookie = cookies[i].trim()
+      console.log('cookies:', cookie)
+      // 检查当前cookie是否包含我们需要的键名
+      if (cookie.startsWith('token' + '=')) {
+        // 如果找到了，解码并返回该cookie的值
+        const token = cookie.substring('token'.length + 1)
+        console.log('tokenVaule:', cookie)
+        config.headers['X-Token'] = token
+      }
+      // if (store.getters.token) {
+      //   // let each request carry token
+      //   // ['X-Token'] is a custom headers key
+      //   // please modify it according to the actual situation
+      //   config.headers["X-Token"] = Cookies.get("token");
+      //   console.log("token:", Cookies.get("token"));
+      // }
+      return config
     }
-    return config
   },
   (error) => {
     // do something with request error
@@ -31,7 +48,6 @@ service.interceptors.request.use(
 )
 
 // response interceptor
-service.interceptors.response
-  .use()
+service.interceptors.response.use()
 
 export default service
