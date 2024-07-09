@@ -11,7 +11,7 @@
 ## APIs
 * 我们不使用put操作，只使用get post delete
 
-##2024.7.9数据库由SQLite转为MySQL
+## 2024.7.9数据库由SQLite转为MySQL
 * MySQL适合处理大规模数据和高并发访问，功能更强大和灵活。
 
 ## Common HTTP status codes used in Suanfamama APIs
