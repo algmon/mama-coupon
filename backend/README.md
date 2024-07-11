@@ -1,6 +1,6 @@
 ---
-title: FastAPI
-description: A FastAPI server
+title: Suanfamama API Backend
+description: Suanfamama AIGC Cognitive Computational Advertising Platform
 tags:
   - fastapi
   - hypercorn
@@ -12,13 +12,14 @@ tags:
 This example starts up a [FastAPI](https://fastapi.tiangolo.com/) server.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/-NvLj4?referralCode=CRJ8FE)
+
 ## ✨ Features
 
-- FastAPI
+- [FastAPI](https://fastapi.tiangolo.com/)
 - [Hypercorn](https://hypercorn.readthedocs.io/)
-- Python 3
+- [Python 3](https://www.python.org/)
 
-## 💁‍♀️ How to use
+## 💁‍♀️ How to Run
 
 - Clone locally and install packages with pip using `pip install -r requirements.txt`
 - Run locally using `hypercorn app:app --reload`
