@@ -1,4 +1,6 @@
 # 算法妈妈AIGC认知计算广告生成平台
+## 简介
+* 让认知计算广告飞
 * https://www.aigc.suanfamama.com
 * 所属行业：Cognitive Computational Advertising
 * 平台公共组件
