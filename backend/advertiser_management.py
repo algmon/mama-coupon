@@ -134,7 +134,8 @@ def create_an_ad(prompt: str, negative_prompt: str, seed: int, aspect_ratio = "1
     #aspect_ratio = "16:9" #@param ["21:9", "16:9", "3:2", "5:4", "1:1", "4:5", "2:3", "9:16", "9:21"]
     output_format = "png" #@param ["jpeg", "png"]
 
-    host = f"https://api.stability.ai/v2beta/stable-image/generate/sd3"
+    host = os.environ["STABILITY_HOST"]
+    model = os.environ["STABILITY_MODEL"]
 
     params = {
         "prompt" : prompt,
@@ -142,7 +143,7 @@ def create_an_ad(prompt: str, negative_prompt: str, seed: int, aspect_ratio = "1
         "aspect_ratio" : aspect_ratio,
         "seed" : seed,
         "output_format" : output_format,
-        "model" : "sd3-large",
+        "model" : model,
         "mode" : "text-to-image"
     }
 
