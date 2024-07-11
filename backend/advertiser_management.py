@@ -126,12 +126,12 @@ def send_generation_request(host, params,):
 
     return response
 
-def create_an_ad(prompt: str, negative_prompt: str):
+def create_an_ad(prompt: str, negative_prompt: str, seed: int, aspect_ratio = "16:9"):
     """
-    TODO: 
+    TODO: Make more parameters avaiable in the API
     """
-    aspect_ratio = "16:9" #@param ["21:9", "16:9", "3:2", "5:4", "1:1", "4:5", "2:3", "9:16", "9:21"]
-    seed = 9 #@param {type:"integer"} TODO: to be configurable
+    #seed = 9 #@param {type:"integer"} TODO: to be configurable
+    #aspect_ratio = "16:9" #@param ["21:9", "16:9", "3:2", "5:4", "1:1", "4:5", "2:3", "9:16", "9:21"]
     output_format = "png" #@param ["jpeg", "png"]
 
     host = f"https://api.stability.ai/v2beta/stable-image/generate/sd3"

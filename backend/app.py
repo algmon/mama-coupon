@@ -41,7 +41,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome! You reach the Suanfamama Cognitive Computational Advertising Platform Backend with Improved Stability and Security."}
+    return {"message": "Welcome! You reach the Suanfamama AIGC Cognitive Computational Advertising Platform Backend."}
 
 
 # User Management
@@ -226,7 +226,7 @@ async def update_specific_ad(request: Request):
     adname = json_data.get('adname')
     creator = json_data.get('creator')
     object_url = json_data.get('object_url')
-    
+
     ad_data = {
         "adname": adname,
         "creator": creator,
@@ -257,10 +257,10 @@ async def get_active_advertisers(start_date: Optional[str] = None, end_date: Opt
     """
     pass
 
-@app.post("/advertisers/create_an_ad")
-async def create_an_ad(request: Request):
+@app.post("/advertisers/create")
+async def create(request: Request):
     """
-    Creates a new ad on the platform.
+    Creates an ad on the platform.
 
     Args:
         prompt:
