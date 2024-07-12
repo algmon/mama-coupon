@@ -2,14 +2,14 @@
   <div class="home">
     <div class="floor">
       <div class="column_box" v-for="item in advInfos" :key="`${item.id}`">
-        <img :src="item.ad.object_url" />
-        <!-- <p>{{ item.ad.id }}</p> -->
+        <img :src="item.object_url" />
+        <p>{{ item.id }}</p>
         <!-- 点赞和收藏功能 -->
         <div class="actions">
-          <span class="like" @click="like(item.ad.id)">
+          <span class="like" @click="like(item.id)">
             <i class="el-icon-thumb"></i> Like
           </span>
-          <span class="favorite" @click="favorite(item.ad.id)">
+          <span class="favorite" @click="favorite(item.id)">
             <i class="el-icon-star-on"></i> Favorite
           </span>
         </div>

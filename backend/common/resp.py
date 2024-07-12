@@ -25,14 +25,14 @@ def SuccessResponseData(data: Union[list, dict, str] = None, msg: str = "Success
     )
 
 
-def ErrorResponseData(error: ErrorBase, *, msg: Optional[str] = None, msg_append: str = "",
-                  data: Union[list, dict, str] = None, status_code: int = status.HTTP_200_OK):
+def ErrorResponseData(code: str, msg: Optional[str] = None,
+                      data: Union[list, dict, str] = None, status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR):
     """ 错误接口返回 """
     return JSONResponse(
         status_code=status_code,
         content={
-            'code': error.code,
-            'msg': (msg or error.msg) + msg_append,
+            'code': code,
+            'msg': msg,
             'data': data or {}
         }
     )

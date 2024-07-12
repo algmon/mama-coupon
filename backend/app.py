@@ -16,7 +16,7 @@ import recommendation_management
 from aiChat import api_aiChat
 from common.db import get_db_connection
 from common.exception import exception
-from common.resp import SuccessResponseData
+from common.resp import SuccessResponseData, ErrorResponseData
 from fashion_video import api_fashion_video
 
 from mysql.connector import cursor, connect
@@ -36,10 +36,11 @@ class Ad(BaseModel):
     creator: str
     object_url: str
 
+
 app = FastAPI()
 app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
 app.include_router(api_fashion_video, prefix="/fashionVideo", tags=["时尚接口"])
-#配置允许域名
+# 配置允许域名
 origins = [
     "http://localhost:9527"
 ]
@@ -55,6 +56,8 @@ app.add_middleware(
 # 在应用程序状态中存储数据库连接
 app.state.db = None
 # 应用程序启动和关闭事件
+
+
 @app.on_event("startup")
 async def startup_event():
     # 使用 app.state 来存储数据库连接
@@ -69,9 +72,11 @@ async def shutdown_event():
         db.close()
 
 # 依赖项，用于获取全局数据库连接的游标
+
+
 def get_db_cursor():
     if app.state.db is None:
-        exception(500 , "Database connection is not initialized")
+        exception(500, "Database connection is not initialized")
     return app.state.db.cursor()
 
 
@@ -98,13 +103,15 @@ async def get_active_users(
     """
 
     # Get active users from your user management module
-    #active_users = user_management.get_active_users(start_date, end_date)
-    active_users = user_management.get_active_users_from_db("./db/users.db", start_date, end_date, get_db_cursor())
+    # active_users = user_management.get_active_users(start_date, end_date)
+    active_users = user_management.get_active_users_from_db(
+        "./db/users.db", start_date, end_date, get_db_cursor())
 
     return {"active_users": len(active_users)}
 
+
 @app.post("/users/login")
-async def login_user(request : Request):
+async def login_user(request: Request):
     """
     Logs in a user on the platform.
 
@@ -120,15 +127,18 @@ async def login_user(request : Request):
     json_data = await request.json()
     username = json_data.get('username')
     password = json_data.get('password')
-    success, user = user_management.login_user_to_db("./db/users.db", username, password,app.state.db.cursor())
+    success, user = user_management.login_user_to_db(
+        "./db/users.db", username, password, app.state.db.cursor())
 
     if success:
-        return {"message": "User Login successful.", "code": 200,"data": {
+        return {"message": "User Login successful.", "code": 200, "data": {
             "token": user[2],
             "userInfo": user
         }}
     else:
-        return {"message": "User Login failed."}, 401
+        return ErrorResponseData(501, "User Login failed.")
+    #    return SuccessResponseData(data={"advInfo": advInfos},msg='获取成功')
+
 
 @app.post("/users/register")
 async def register_user(request: Request, db: cursor.MySQLCursor = Depends(get_db_cursor)):
@@ -150,12 +160,14 @@ async def register_user(request: Request, db: cursor.MySQLCursor = Depends(get_d
     email = data.get("email")
     password = data.get("password")
     phone = data.get("phone")
-    success = user_management.register_user_to_db("./db/users.db", username, password,email,phone,app.state.db.cursor())
+    success = user_management.register_user_to_db(
+        "./db/users.db", username, password, email, phone, app.state.db.cursor())
 
     if success:
         return {"message": "User Registration successful.", "code": 200}
     else:
         return {"message": "Registration failed."}, 400
+
 
 @app.get("/users/total_users")
 async def get_total_users():
@@ -166,8 +178,10 @@ async def get_total_users():
         A JSON response with the total number of users.
     """
     # Get total users from your user management module
-    total_users = user_management.get_total_users_from_db("./db/users.db", get_db_cursor())
+    total_users = user_management.get_total_users_from_db(
+        "./db/users.db", get_db_cursor())
     return {"total_users": total_users}
+
 
 @app.get("/users/{user_id}")
 async def get_specific_user(user_id: str):
@@ -180,14 +194,16 @@ async def get_specific_user(user_id: str):
     Returns:
         A JSON response with the user details.
     """
-    user = user_management.get_spcific_user_from_db("./db/users.db", int(user_id), get_db_cursor())
+    user = user_management.get_spcific_user_from_db(
+        "./db/users.db", int(user_id), get_db_cursor())
     if user:
         return {"user": user}
     else:
         return {"message": "User not found."}, 404
 
+
 @app.get("/user/info")
-async def useInfo(reqest : Request):
+async def useInfo(reqest: Request):
     data = {
         "code": 200,
         "data": {
@@ -200,6 +216,8 @@ async def useInfo(reqest : Request):
     return {"data": data}
 
 # Ad Management
+
+
 @app.get("/ads/active_ads")
 async def get_active_ads():
     """
@@ -210,8 +228,10 @@ async def get_active_ads():
     Returns:
         A JSON response with a list of active ads.
     """
-    active_ads = ad_management.get_active_ads_from_db("./db/ads.db", get_db_cursor())
+    active_ads = ad_management.get_active_ads_from_db(
+        "./db/ads.db", get_db_cursor())
     return {"active_ads": active_ads}
+
 
 @app.get("/ads/total_ads")
 async def get_total_ads():
@@ -221,8 +241,10 @@ async def get_total_ads():
     Returns:
         A JSON response with the total number of ads.
     """
-    total_ads = ad_management.get_total_ads_from_db("./db/ads.db", get_db_cursor())
+    total_ads = ad_management.get_total_ads_from_db(
+        "./db/ads.db", get_db_cursor())
     return {"total_ads": total_ads}
+
 
 @app.get("/ads/{ad_id}")
 async def get_specific_ad(ad_id: str):
@@ -235,11 +257,13 @@ async def get_specific_ad(ad_id: str):
     Returns:
         A JSON response with the ad details.
     """
-    ad = ad_management.get_spcific_ad_from_db("./db/ads.db", int(ad_id), get_db_cursor())
+    ad = ad_management.get_spcific_ad_from_db(
+        "./db/ads.db", int(ad_id), get_db_cursor())
     if ad:
         return {"ad": ad}
     else:
         return {"message": "Ad not found."}, 404
+
 
 @app.post("/ads/update")
 async def update_specific_ad(request: Request):
@@ -279,6 +303,8 @@ async def update_specific_ad(request: Request):
         return {"message": "Ad update failed."}, 400
 
 # Advertiser Management
+
+
 @app.get("/advertisers/active_advertisers")
 async def get_active_advertisers(start_date: Optional[str] = None, end_date: Optional[str] = None,):
     """
@@ -292,6 +318,7 @@ async def get_active_advertisers(start_date: Optional[str] = None, end_date: Opt
         A JSON response with the number of active advertisers.
     """
     pass
+
 
 @app.post("/advertisers/create")
 async def create(request: Request):
@@ -311,16 +338,18 @@ async def create(request: Request):
         prompt = json_data.get('prompt')
         negative_prompt = json_data.get('negative_prompt')
 
-        #prompt = "a dog"
-        #negative_prompt = "hands and face"
+        # prompt = "a dog"
+        # negative_prompt = "hands and face"
 
         # Create an ad image
-        success = advertiser_management.create_an_ad(prompt, negative_prompt, get_db_cursor())
+        success = advertiser_management.create_an_ad(
+            prompt, negative_prompt, get_db_cursor())
 
         if success:
             return JSONResponse(
                 status_code=200,
-                content={"message": "Ad image created successfully.", "code": 200, "data": {}}
+                content={"message": "Ad image created successfully.",
+                         "code": 200, "data": {}}
             )
         else:
             return JSONResponse(
@@ -334,6 +363,8 @@ async def create(request: Request):
         )
 
 # Recommendation Management
+
+
 @app.get("/match/{user_id}")
 async def get_matches_for_specifc_user(user_id):
     """
@@ -345,30 +376,35 @@ async def get_matches_for_specifc_user(user_id):
     Returns:
         A JSON response with a list of ads.
     """
-    total_ads = ad_management.get_total_ads_from_db("./db/ads.db", get_db_cursor())
-    num_ads_recommend = 11 # TODO: ADD to global config
-    matches = recommendation_management.match_for_specific_user(user_id, total_ads, num_ads_recommend)
+    total_ads = ad_management.get_total_ads_from_db(
+        "./db/ads.db", get_db_cursor())
+    num_ads_recommend = 11  # TODO: ADD to global config
+    matches = recommendation_management.match_for_specific_user(
+        user_id, total_ads, num_ads_recommend)
     return {"matches": matches}
 
 
 @app.get("/advertisers/getAdv")
-async def getAdv( request: Request):
+async def getAdv(request: Request):
     print(request.headers.get("token"))
-    userId = user_management.get_user_id_by_token("./db/users.db",request.headers.get("token"), get_db_cursor())
-    advInfos=[]
-    total_ads = ad_management.get_total_ads_from_db("./db/ads.db", get_db_cursor())
-    num_ads_recommend = 11 # TODO: ADD to global config
-    ads = recommendation_management.match_for_specific_user(userId, total_ads, num_ads_recommend)
+    userId = user_management.get_user_id_by_token(
+        "./db/users.db", request.headers.get("token"), get_db_cursor())
+    advInfos = []
+    total_ads = ad_management.get_total_ads_from_db(
+        "./db/ads.db", get_db_cursor())
+    num_ads_recommend = 11  # TODO: ADD to global config
+    ads = recommendation_management.match_for_specific_user(
+        userId, total_ads, num_ads_recommend)
     # 访问 'matches' 列表
-    matched_ads_list =(ads[0].get('matched_ads', []))
-        # 现在 matched_ads_list 包含了您需要的列表
-    print("matched_ads_list:",matched_ads_list)
+    matched_ads_list = (ads[0].get('matched_ads', []))
+    # 现在 matched_ads_list 包含了您需要的列表
+    print("matched_ads_list:", matched_ads_list)
     for adv in matched_ads_list:
-        advInfo = ad_management.get_spcific_ad_from_db("./db/ads.db", int(adv), get_db_cursor())
+        advInfo = ad_management.get_spcific_ad_from_db(
+            "./db/ads.db", int(adv), get_db_cursor())
         advInfos.append(advInfo)
     print("advInfos:", advInfos)
-    return SuccessResponseData(data={"advInfo": advInfos},msg='获取成功')
-
+    return SuccessResponseData(data={"advInfo": advInfos}, msg='获取成功')
 
 
 if __name__ == "__main__":

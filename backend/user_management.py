@@ -6,7 +6,7 @@ import hashlib
 from common.exception import exception
 
 
-def get_active_users_from_db(db_path: str, start_date: str = None, end_date: str = None, db: object=None):
+def get_active_users_from_db(db_path: str, start_date: str = None, end_date: str = None, db: object = None):
     """
     Gets a list of active users from a SQLite database within a specified date range.
 
@@ -49,7 +49,8 @@ def get_active_users_from_db(db_path: str, start_date: str = None, end_date: str
 
     return active_users
 
-def get_total_users_from_db(db_path: str,db: object):
+
+def get_total_users_from_db(db_path: str, db: object):
     """
     Gets the total number of users from a SQLite database.
 
@@ -77,6 +78,7 @@ def get_total_users_from_db(db_path: str,db: object):
 
     return total_users
 
+
 def get_users_from_db(db_path: str, db: object):
     """
     Gets a list of users from a SQLite database.
@@ -103,7 +105,8 @@ def get_users_from_db(db_path: str, db: object):
 
     # Fetch all rows as a list of dictionaries
     users = [
-        dict(id=row[0], username=row[1], password=row[2], token=row[3], last_active=row[4])
+        dict(id=row[0], username=row[1], password=row[2],
+             token=row[3], last_active=row[4])
         for row in db.fetchall()
     ]
 
@@ -111,6 +114,7 @@ def get_users_from_db(db_path: str, db: object):
     # conn.close()
 
     return users
+
 
 def register_user_to_db(db_path: str,
                         username: str,
@@ -181,7 +185,7 @@ def register_user_to_db(db_path: str,
     userPhone = db.fetchone()
     if user or userPhone:
         # 用户名或手机号已存在
-        exception(501 , "Username or phone already exists")
+        exception(501, "Username or phone already exists")
 
     # Hash the password using SHA-256
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
@@ -193,7 +197,7 @@ def register_user_to_db(db_path: str,
     db.execute("""
         INSERT INTO users (username, password_hash, token, email, phone) 
         VALUES (%s, %s, %s, %s, %s)
-    """, (username, hashed_password, token,email,phone))
+    """, (username, hashed_password, token, email, phone))
 
     # 提交更改
     # db.connection.commit()
@@ -201,8 +205,7 @@ def register_user_to_db(db_path: str,
     return True
 
 
-
-def login_user_to_db(db_path: str, username: str, password: str , db: object):
+def login_user_to_db(db_path: str, username: str, password: str, db: object):
     """
     Logs in a user on the platform using the database.
 
@@ -222,10 +225,11 @@ def login_user_to_db(db_path: str, username: str, password: str , db: object):
 
     # Hash the password using SHA-256
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
-
+    print("username:" + username)
+    print("hashed_password:" + hashed_password)
     # Execute the query to get the user with the matching username and password
-    db.execute("SELECT * FROM users WHERE username = %s AND password_hash = %s", (username, hashed_password))
-
+    db.execute("SELECT * FROM users WHERE username = %s AND password_hash = %s",
+               (username, hashed_password))
     # Fetch the user data
     user = db.fetchone()
 
@@ -239,7 +243,8 @@ def login_user_to_db(db_path: str, username: str, password: str , db: object):
         return True, userInfo
     else:
         return False, None
-    
+
+
 def get_spcific_user_from_db(db_path: str, user_id: int, db: object):
     """
     Gets a specific user from a SQLite database based on its ID.
@@ -265,10 +270,12 @@ def get_spcific_user_from_db(db_path: str, user_id: int, db: object):
 
     if row:
         # Convert the row to a dictionary
-        user = dict(id=row[0], username=row[1], password=row[2], token=row[3], last_active=row[4])
+        user = dict(id=row[0], username=row[1],
+                    password=row[2], token=row[3], last_active=row[4])
         return user
     else:
         return None
+
 
 def get_user_id_by_token(db_path: str, token: str, db: object):
     # conn = sqlite3.connect(db_path)
@@ -283,4 +290,3 @@ def get_user_id_by_token(db_path: str, token: str, db: object):
     # Close the database connection
     # conn.close()
     return userId
-
