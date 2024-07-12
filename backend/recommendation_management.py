@@ -1,7 +1,7 @@
 import ad_management
 import user_management
 import random
-from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
 def get_users(db_path: str):

@@ -1,34 +1,35 @@
-import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import axios from "axios";
+import { MessageBox, Message } from "element-ui";
+import store from "@/store";
+import { getToken } from "@/utils/auth";
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
-})
+  timeout: 30000, // request timeout
+});
 
 // request interceptor
 service.interceptors.request.use(
   (config) => {
     // do something before request is sent
     // // 获取所有的cookie
-    const cookies = document.cookie.split(';')
+    const cookies = document.cookie.split(";");
 
-    console.log('cookies:', cookies)
+    console.log("cookies:", cookies);
+    console.log("cookies.length:", cookies.length);
 
     for (let i = 0; i < cookies.length; i++) {
       // 去除每个cookie字符串的首尾空白字符
-      const cookie = cookies[i].trim()
-      console.log('cookies:', cookie)
+      const cookie = cookies[i].trim();
+      console.log("cookies:", cookie);
       // 检查当前cookie是否包含我们需要的键名
-      if (cookie.startsWith('token' + '=')) {
-        // 如果找到了，解码并返回该cookie的值
-        const token = cookie.substring('token'.length + 1)
-        console.log('tokenVaule:', cookie)
-        config.headers['X-Token'] = token
+      if (cookie.startsWith("token")) {
+        //   // 如果找到了，解码并返回该cookie的值
+        const token = cookie.substring("token".length + 1);
+        console.log("tokenVaule:", token);
+        config.headers["token"] = token;
       }
       // if (store.getters.token) {
       //   // let each request carry token
@@ -37,17 +38,17 @@ service.interceptors.request.use(
       //   config.headers["X-Token"] = Cookies.get("token");
       //   console.log("token:", Cookies.get("token"));
       // }
-      return config
     }
+    return config;
   },
   (error) => {
     // do something with request error
-    console.log(error) // for debug
-    return Promise.reject(error)
+    console.log(error); // for debug
+    return Promise.reject(error);
   }
-)
+);
 
 // response interceptor
-service.interceptors.response.use()
+service.interceptors.response.use();
 
-export default service
+export default service;

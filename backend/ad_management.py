@@ -1,6 +1,6 @@
 import sqlite3
 
-def get_total_ads_from_db(db_path: str):
+def get_total_ads_from_db(db_path: str, db: object):
     """
     Retrieves the total number of ads from the database.
 
@@ -12,23 +12,23 @@ def get_total_ads_from_db(db_path: str):
     """
 
     # Connect to the database
-    conn = sqlite3.connect(db_path)
+    # conn = sqlite3.connect(db_path)
 
     # Create a cursor object
-    cursor = conn.cursor()
+    # cursor = conn.cursor()
 
     # Execute the query to get the total number of users
-    cursor.execute("SELECT COUNT(*) FROM ads")
+    db.execute("SELECT COUNT(*) FROM ads")
 
     # Fetch the result
-    total_ads = cursor.fetchone()[0]
+    total_ads = db.fetchone()[0]
 
     # Close the database connection
-    conn.close()
+    # conn.close()
 
     return total_ads
 
-def get_ads_from_db(db_path: str):
+def get_ads_from_db(db_path: str, db: object):
     """
     Gets a list of ads from a SQLite database.
 
@@ -42,24 +42,24 @@ def get_ads_from_db(db_path: str):
         - creator: The ad's creator.
         - object-url: The object url of the ad
     """
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    # conn = sqlite3.connect(db_path)
+    # cursor = conn.cursor()
 
     # Execute the query to get all ads
-    cursor.execute("SELECT * FROM ads")
+    db.execute("SELECT * FROM ads")
 
     # Fetch all rows as a list of dictionaries
     ads = [
         dict(id=row[0], adname=row[1], creator=row[2], object_url=row[3])
-        for row in cursor.fetchall()
+        for row in db.fetchall()
     ]
 
     # Close the database connection
-    conn.close()
+    # conn.close()
 
     return ads
 
-def get_spcific_ad_from_db(db_path: str, ad_id: int):
+def get_spcific_ad_from_db(db_path: str, ad_id: int, db: object):
     """
     Gets a specific ad from a SQLite database based on its ID.
 
@@ -70,17 +70,17 @@ def get_spcific_ad_from_db(db_path: str, ad_id: int):
     Returns:
         A dictionary representing the ad, or None if the ad is not found.
     """
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    # conn = sqlite3.connect(db_path)
+    # cursor = conn.cursor()
 
     # Execute the query to get the specific ad
-    cursor.execute("SELECT * FROM ads WHERE id = ?", (ad_id,))
+    db.execute("SELECT * FROM ads WHERE id =%s", (ad_id,))
 
     # Fetch the result
-    row = cursor.fetchone()
+    row = db.fetchone()
 
     # Close the database connection
-    conn.close()
+    # conn.close()
 
     if row:
         # Convert the row to a dictionary
@@ -89,7 +89,7 @@ def get_spcific_ad_from_db(db_path: str, ad_id: int):
     else:
         return None
 
-def update_ad(db_path: str, ad_data: dict):
+def update_ad(db_path: str, ad_data: dict, db: object):
     """
     Updates an existing ad in the database.
 
@@ -103,10 +103,10 @@ def update_ad(db_path: str, ad_data: dict):
         True if the update is successful, False otherwise.
     """
     # Connect to the database
-    conn = sqlite3.connect(db_path)
+    # conn = sqlite3.connect(db_path)
 
     # Create a cursor object
-    cursor = conn.cursor()
+    # cursor = conn.cursor()
 
     # Prepare the SQL statement
     sql = """
@@ -116,21 +116,21 @@ def update_ad(db_path: str, ad_data: dict):
     """
 
     # Execute the SQL statement with the updated ad data
-    cursor.execute(sql, ad_data)
+    db.execute(sql, ad_data)
 
     # Commit the changes
-    conn.commit()
+    # conn.commit()
 
     # Close the database connection
-    conn.close()
+    # conn.close()
 
     # Check if any rows were updated
-    if cursor.rowcount > 0:
+    if db.rowcount > 0:
         return True
     else:
         return False
 
-def get_active_ads_from_db(db_path: str):
+def get_active_ads_from_db(db_path: str, db: object):
     """
     Gets a list of active ads from a SQLite database.
 
@@ -146,19 +146,19 @@ def get_active_ads_from_db(db_path: str):
         - creator: The ad's creator.
         - object-url: The object url of the ad
     """
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    # conn = sqlite3.connect(db_path)
+    # cursor = conn.cursor()
 
     # Execute the query to get active ads (where 'object-url' is not empty)
-    cursor.execute("SELECT * FROM ads WHERE 'object-url' != ''")
+    db.execute("SELECT * FROM ads WHERE 'object-url' != ''")
 
     # Fetch all rows as a list of dictionaries
     active_ads = [
         dict(id=row[0], adname=row[1], creator=row[2], object_url=row[3])
-        for row in cursor.fetchall()
+        for row in db.fetchall()
     ]
 
     # Close the database connection
-    conn.close()
+    # conn.close()
 
     return active_ads
