@@ -3,22 +3,28 @@ import requests
 from fastapi import Request
 # Import your user management module here
 import user_management
+import os
 from common.resp import SuccessResponseData
 
 api_aiChat = APIRouter()
-#url
+LINKAI_KEY = os.environ["LINKAI_KEY"]
+LINKAI_CODE = os.environ["LINKAI_CODE"]
+# url
 url = "https://api.link-ai.tech/v1/chat/completions"
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer Link_uzmfmWsBHkUbrflrcK8O2TpyLFujSm8DMCV3gfGei7"
+    "Authorization": "Bearer " + LINKAI_KEY
 }
+
 
 @api_aiChat.post("/answer")
 async def get_users(request: Request):
+    print("key:"+LINKAI_KEY)
+    print("code:"+LINKAI_CODE)
     data = await request.json()
     issue = data.get("issue")
     body = {
-        "app_code": "",
+        "app_code": LINKAI_CODE,
         "messages": [
             {
                 "role": "user",
@@ -30,10 +36,11 @@ async def get_users(request: Request):
     #  访问linkai
     res = requests.post(url, json=body, headers=headers)
     if res.status_code == 200:
-     reply_text = res.json().get("choices")[0]['message']['content']
-     print(reply_text)
+        reply_text = res.json().get("choices")[0]['message']['content']
+        print(reply_text)
     else:
-     error = res.json().get("error")
-     print(f"请求异常, 错误码={res.status_code}, 错误类型={error.get('type')}, 错误信息={error.get('message')}")
+        error = res.json().get("error")
+        print(
+            f"请求异常, 错误码={res.status_code}, 错误类型={error.get('type')}, 错误信息={error.get('message')}")
 
-    return SuccessResponseData(data={"answer": reply_text},msg='获取成功')
+    return SuccessResponseData(data={"answer": reply_text}, msg='获取成功')
