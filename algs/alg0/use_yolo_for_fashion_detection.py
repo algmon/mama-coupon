@@ -15,6 +15,7 @@ imgs = [os.path.join(base, img) for img in imgs]
 print(imgs)
 
 # 2. Model
+# TODO: Try yolov8 instead of yolov5
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
 # Images
