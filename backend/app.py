@@ -82,6 +82,7 @@ def get_db_cursor():
 
 @app.get("/")
 async def root():
+    print("root() is called.")
     return {"message": "Welcome! You reach the Suanfamama AIGC Cognitive Computational Advertising Platform Backend."}
 
 
