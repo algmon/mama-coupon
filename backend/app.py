@@ -1,7 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
 from typing import Optional, List
-
 from fastapi.params import Depends, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -13,13 +12,17 @@ import advertiser_management
 import ad_management
 import recommendation_management
 
+
 from aiChat import api_aiChat
 from common.db import get_db_connection
 from common.exception import exception
 from common.resp import SuccessResponseData, ErrorResponseData
 from fashion_video import api_fashion_video
-
 from mysql.connector import cursor, connect
+from fastapi import Request, HTTPException, Response
+from typing import Optional
+
+from common.interceptor import Interceptor
 
 
 class User(BaseModel):
@@ -38,8 +41,28 @@ class Ad(BaseModel):
 
 
 app = FastAPI()
+# 应用中间件
+# 定义中间件类
+
+
+# 添加中间件到应用
+app.add_middleware(Interceptor)
+
 app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
 app.include_router(api_fashion_video, prefix="/fashionVideo", tags=["时尚接口"])
+# 注册中间件
+
+
+# def auth_middleware(request: Request, call_next):
+#     # 从请求头中获取 token
+#     print(request.headers.get("token"))
+#     token = request.headers.get("token")
+#     if not token:
+#         raise HTTPException(status_code=401, detail="Not authenticated")
+#     response = call_next(request)
+#     return response
+
+
 # 配置允许域名
 origins = [
     "http://localhost:9527"
