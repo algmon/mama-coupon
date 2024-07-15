@@ -278,8 +278,6 @@ def get_spcific_user_from_db(db_path: str, user_id: int, db: object):
 
 
 def get_user_id_by_token(db_path: str, token: str, db: object):
-    # conn = sqlite3.connect(db_path)
-    # cursor = conn.cursor()
 
     # Execute the query to get the specific user
     db.execute("SELECT id FROM users WHERE token = %s", (token,))
@@ -290,3 +288,12 @@ def get_user_id_by_token(db_path: str, token: str, db: object):
     # Close the database connection
     # conn.close()
     return userId
+
+
+def get_user_by_developer_token(mama_api_key: str, db: object):
+    db.execute("SELECT * FROM developers WHERE mama_api_key = %s",
+               (mama_api_key,))
+    # Fetch the result
+    userInfo = db.fetchone()
+
+    return userInfo

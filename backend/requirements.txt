@@ -16,3 +16,5 @@ mysql-connector-python
 pytest
 
 Request
+
+starlette

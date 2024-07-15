@@ -45,9 +45,6 @@ app = FastAPI()
 # 定义中间件类
 
 
-# 添加中间件到应用
-app.add_middleware(Interceptor)
-
 app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
 app.include_router(api_fashion_video, prefix="/fashionVideo", tags=["时尚接口"])
 # 注册中间件
@@ -101,6 +98,10 @@ def get_db_cursor():
     if app.state.db is None:
         exception(500, "Database connection is not initialized")
     return app.state.db.cursor()
+
+
+# 添加中间件到应用
+app.add_middleware(Interceptor)
 
 
 @app.get("/")
