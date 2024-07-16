@@ -8,6 +8,7 @@ import base64
 
 class Interceptor(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
+        token1 = request.headers.get("Token")
         db = get_db_connection()
         # 从请求头中获取 token
         # 开发者用户
@@ -37,7 +38,7 @@ class Interceptor(BaseHTTPMiddleware):
             # 如果token不为空
             if token:
                 userId = get_user_id_by_token("", token, db.cursor())
-                print("登录成功userId:"+userId)
+                print("登录成功userId:"+userId[0])
             # 检查 token 是否存在
                 if userId:
                     # 调用下一个请求处理函数

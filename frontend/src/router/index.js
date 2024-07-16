@@ -117,6 +117,24 @@ export const constantRoutes = [
       },
     ],
   },
+  {
+    path: "/create-adv",
+    component: Layout,
+    redirect: "noRedirect",
+    name: "create-adv",
+    meta: {
+      title: "create-adv",
+      icon: "create-adv",
+    },
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/create-adv/index"),
+        name: " ",
+        meta: { title: "create-adv", icon: "documentation", affix: true },
+      },
+    ],
+  },
 
   {
     path: "/profile",
