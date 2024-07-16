@@ -262,6 +262,24 @@ export default {
             .catch(() => {
               this.loading = false;
             });
+
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({
+                // path: this.redirect || "/",
+                path: "/documentation/index",
+                query: this.otherQuery,
+              });
+              this.loading = false;
+
+              document.cookie = `token=${response.data.data.token}; path=/;`;
+              document.cookie = `userInfo=${response.data.data.userInfo}; path=/;`;
+              console.log("response.data.token：", response.data.data.token);
+            })
+            .catch(() => {
+              this.loading = false;
+            });
           // 将token存储到cookie
           // auth.setToken(response.data.data.token);
         })

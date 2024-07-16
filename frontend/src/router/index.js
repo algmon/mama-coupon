@@ -335,6 +335,42 @@ const createRouter = () =>
 
 const router = createRouter();
 
+// 辅助函数，用于从cookie中获取token
+function getTokenFromCookie() {
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    // 去除每个cookie字符串的首尾空白字符
+    const cookie = cookies[i].trim();
+    console.log("cookies:", cookie);
+    // 检查当前cookie是否包含我们需要的键名
+    if (cookie.startsWith("token")) {
+      //   // 如果找到了，解码并返回该cookie的值
+      const token = cookie.substring("token".length + 1);
+      return token;
+    }
+  }
+  return null;
+}
+
+// 全局路由守卫
+router.beforeEach((to, from, next) => {
+  // 从cookie中获取token
+  const token = getTokenFromCookie();
+  // 检查token是否存在以及用户的登录状态
+  const isAuth = token;
+
+  if (to.path != "/login" && to.path != "/register" && isAuth == null) {
+    // 如果用户已经登录，但尝试访问登录页面，则重定向到首页
+    next("/login");
+  } else if (to.path != "/login" && to.path != "/register" && isAuth == null) {
+    // 如果用户已经登录，但尝试访问登录页面，则重定向到首页
+    next("/register");
+  } else {
+    // 如果用户已登录或访问的是登录页面，则允许访问
+    next();
+  }
+});
+
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter();
