@@ -1,13 +1,21 @@
 from fastapi import Depends
 from mysql.connector import connect
+import json
+
+
+def read_config_file(filepath):
+    with open(filepath, 'r') as file:
+        return json.load(file)
 
 
 def get_db_connection():
+    config = read_config_file('config.json')
+    db_config = config['database']
     connection = connect(
-        host='106.53.173.82',
-        user="suanfamama",
-        password="suanfamama123",
-        database="platform-common"
+        host=db_config['host'],
+        user=db_config['user'],
+        password=db_config['password'],
+        database=db_config['database']
     )
     # 开启自动提交模式
     connection.autocommit = True
