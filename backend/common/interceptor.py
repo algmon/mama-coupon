@@ -33,10 +33,11 @@ class Interceptor(BaseHTTPMiddleware):
                 return JSONResponse(status_code=401, content={"message": "Unauthorized of developer"})
         else:
             # 普通用户
-            token = request.headers.get("token")
+            token = request.headers.get("Token")
             # 如果token不为空
             if token:
                 userId = get_user_id_by_token("", token, db.cursor())
+                print("登录成功userId:"+userId)
             # 检查 token 是否存在
                 if userId:
                     # 调用下一个请求处理函数
