@@ -157,7 +157,7 @@ async def login_user(request: Request):
 
     if success:
         return {"message": "User Login successful.", "code": 200, "data": {
-            "token": user[2],
+            "token": user[3],
             "userInfo": user
         }}
     else:
