@@ -11,6 +11,13 @@ class Interceptor(BaseHTTPMiddleware):
         db = get_db_connection()
         # 从请求头中获取 token
         # 开发者用户
+        # 放行api
+        doJson = {"/users/login", "/users/register"}
+        for url in doJson:
+            if request.url.path == url:
+                response = await call_next(request)
+                return response
+
         mama_api_key = request.headers.get("mama_api_key")
         if mama_api_key is not None:
             mama_api_key_bytes = mama_api_key.encode('utf-8')
