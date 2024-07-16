@@ -12,9 +12,8 @@ class Interceptor(BaseHTTPMiddleware):
         # 从请求头中获取 token
         # 开发者用户
         mama_api_key = request.headers.get("mama_api_key")
-        mama_api_key_bytes = mama_api_key.encode('utf-8')
-
         if mama_api_key is not None:
+            mama_api_key_bytes = mama_api_key.encode('utf-8')
             mama_api_key_base64 = base64.b64encode(mama_api_key_bytes)
             userInfo = get_user_by_developer_token(
                 mama_api_key_base64, db.cursor())
