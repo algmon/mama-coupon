@@ -7,6 +7,7 @@
       class="login-form"
       autocomplete="on"
       label-position="left"
+      name="loginForm"
     >
       <div class="title-container">
         <h3 class="title">AIGC认知计算广告生成平台</h3>
