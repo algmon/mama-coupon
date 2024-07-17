@@ -1,6 +1,6 @@
 # 算法妈妈AIGC认知计算广告生成平台
 ## 简介
-* 妈里妈外
+* 产品名称：妈里妈外
 * 用户看广告主的广告看得入迷
 * 所属行业：Cognitive Computational Advertising
 
