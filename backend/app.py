@@ -467,3 +467,4 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
     schedule.run_pending()  # 运行所有可以运行的任务
     time.sleep(1)  # 等待一秒
+    print("")

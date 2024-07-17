@@ -324,7 +324,6 @@ def register_user_by_camera_to_db(db_path: str,
             VALUES (%s, %s, %s, %s, %s, %s)
         """, (username, last_updated_at, is_active, avatar_url, fashion_score, fashion_eval_reason))
 
-    # 提交更改
-    # db.connection.commit()
-    # db.execute("COMMIT")
+    
     return True
+
