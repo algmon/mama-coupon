@@ -1,29 +1,4 @@
-import cv2
-from ultralytics import YOLO
-import torch
-
-from load_camera import *
-
-# 加载模型
-def load_model(model_path, yaml_path=None, task='segment'):
-
-    # 加载（改动过结构）的模型
-    if yaml_path:
-        model = YOLO(yaml_path, task=task).load(model_path)
-    else:
-        model = YOLO(model_path, task=task)
-    return model
-
-# 加载模型到图形计算设备
-def load_device(model):
-
-    # 获取图形计算设备信息
-    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
-    # 将模型切换到图形计算设备上
-    model.to(device)
-
-    return model
+from utils import *
 
 # 使用摄像头进行语义分割
 def camera_segmentation(model, cap, img_size=(1920,1088), save_txt=False, save_crop=False):
@@ -71,12 +46,12 @@ def reuse_camera_segmentation(model, camera_num=1, box=True, save_txt=False, sav
 
 if __name__ == '__main__':
     # 加载YOLOv8语义分割模型（最小参数量）
-    model_path = 'config/weight/yolov8n-seg.pt'
-    yaml_path = '../config/model/yolov8n-seg.yaml'
+    model_path = '../config/weight/yolov8n-seg.pt'
     model = load_model(model_path)
+    # yaml_path = '../config/model/yolov8n-seg.yaml'
     # model = load_model(model_path, yaml_path)
 
-    # 单次调用
+    # 单次展示语义分割
     # cap = load_camera(1)
     # out = camera_segmentation(model, cap)
 
