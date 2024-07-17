@@ -1,11 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
-from typing import Optional, List
 from fastapi.params import Depends, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import Request
 
 import user_management
 import advertiser_management
@@ -24,6 +22,10 @@ from typing import Optional
 
 from common.interceptor import Interceptor
 
+from datetime import datetime
+import schedule
+import time
+
 
 class User(BaseModel):
     username: str
@@ -38,6 +40,14 @@ class Ad(BaseModel):
     adname: str
     creator: str
     object_url: str
+
+class UserRegistration(BaseModel):
+    username: str
+    last_updated_at: str
+    is_active: str
+    avatar_url: str
+    fashion_score: int
+    fashion_eval_reason: str
 
 
 app = FastAPI()
@@ -432,5 +442,28 @@ async def getAdv(request: Request):
     return SuccessResponseData(data={"advInfo": advInfos}, msg='获取成功')
 
 
+
+#注册相机拍摄的用户
+def register_user_by_camera(username,avatar_url,fashion_score,fashion_eval_reason):
+
+    now = datetime.now()
+    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    last_updated_at = formatted_now
+    is_active = "1"
+    success = user_management.register_user_by_camera_to_db(
+        "./db/users.db", username, last_updated_at, is_active, avatar_url, fashion_score, fashion_eval_reason,  app.state.db.cursor())
+
+    if success:
+        return {"message": "User Registration successful.", "code": 200}
+    else:
+        return {"message": "Registration failed."}, 400
+
+
+#定时器 定时调用相机拍摄解析照片的相关方法
+#TODO: #未填写具体的方法内容
+schedule.every(10).seconds.do()
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+    schedule.run_pending()  # 运行所有可以运行的任务
+    time.sleep(1)  # 等待一秒
