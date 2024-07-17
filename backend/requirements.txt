@@ -11,6 +11,7 @@ gradio_client
 mysql-connector-python
 starlette
 schedule
+logging
 
 # Testing dependencies
 pytest
