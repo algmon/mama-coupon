@@ -1,3 +1,4 @@
+import logging
 import uvicorn
 from fastapi import FastAPI
 from fastapi.params import Depends, Header
@@ -51,15 +52,23 @@ class UserRegistration(BaseModel):
 
 
 app = FastAPI()
+
+# Configure the logging module
+logging.basicConfig(
+    level=logging.INFO,  # Set the desired logging level
+    format="%(asctime)s - %(levelname)s - %(filename)s - %(lineno)d - %(message)s",
+    handlers=[
+        logging.StreamHandler(),  # Log to the console
+        logging.FileHandler("app.log"),  # Log to a file
+    ],
+)
+
 # 应用中间件
 # 定义中间件类
-
-
 app.include_router(api_aiChat, prefix="/aiChat", tags=["算法妈妈多模态能力接口"])
 app.include_router(api_fashion_video, prefix="/fashionVideo", tags=["时尚接口"])
+
 # 注册中间件
-
-
 # def auth_middleware(request: Request, call_next):
 #     # 从请求头中获取 token
 #     print(request.headers.get("token"))
@@ -68,7 +77,6 @@ app.include_router(api_fashion_video, prefix="/fashionVideo", tags=["时尚接�
 #         raise HTTPException(status_code=401, detail="Not authenticated")
 #     response = call_next(request)
 #     return response
-
 
 # 配置允许域名
 origins = [
@@ -102,8 +110,6 @@ async def shutdown_event():
         db.close()
 
 # 依赖项，用于获取全局数据库连接的游标
-
-
 def get_db_cursor():
     if app.state.db is None:
         exception(500, "Database connection is not initialized")
@@ -116,35 +122,10 @@ app.add_middleware(Interceptor)
 
 @app.get("/")
 async def root():
-    print("root() is called.")
+    logging.info("Root endpoint accessed.")
     return {"message": "Welcome! You reach the Suanfamama AIGC Cognitive Computational Advertising Platform Backend."}
 
-
-# # User Management
-@app.get("/users/active_users")
-async def get_active_users(
-    start_date: Optional[str] = None,
-    end_date: Optional[str] = None,
-):
-    """
-    Returns the number of active users within a specified date range.
-
-    Args:
-        start_date: Optional start date in YYYY-MM-DD format.
-        end_date: Optional end date in YYYY-MM-DD format.
-
-    Returns:
-        A JSON response with the number of active users.
-    """
-
-    # Get active users from your user management module
-    # active_users = user_management.get_active_users(start_date, end_date)
-    active_users = user_management.get_active_users_from_db(
-        "./db/users.db", start_date, end_date, get_db_cursor())
-
-    return {"active_users": len(active_users)}
-
-
+# User Management
 @app.post("/users/login")
 async def login_user(request: Request):
     """
@@ -157,6 +138,7 @@ async def login_user(request: Request):
     Returns:
         A JSON response with the status of the login.
     """
+    logging.info("login_user endpoint accessed.")
 
     # Authenticate the user in your user management module
     json_data = await request.json()
@@ -189,6 +171,7 @@ async def register_user(request: Request, db: cursor.MySQLCursor = Depends(get_d
     Returns:
         A JSON response with the status of the registration.
     """
+    logging.info("register_user endpoint accessed.")
 
     data = await request.json()
     username = data.get("username")
@@ -203,21 +186,6 @@ async def register_user(request: Request, db: cursor.MySQLCursor = Depends(get_d
     else:
         return {"message": "Registration failed."}, 400
 
-
-@app.get("/users/total_users")
-async def get_total_users():
-    """
-    Returns the total number of users on the platform.
-
-    Returns:
-        A JSON response with the total number of users.
-    """
-    # Get total users from your user management module
-    total_users = user_management.get_total_users_from_db(
-        "./db/users.db", get_db_cursor())
-    return {"total_users": total_users}
-
-
 @app.get("/users/{user_id}")
 async def get_specific_user(user_id: str):
     """
@@ -229,6 +197,8 @@ async def get_specific_user(user_id: str):
     Returns:
         A JSON response with the user details.
     """
+    logging.info(f"get_specific_user endpoint accessed with user_id: {user_id}")
+
     user = user_management.get_spcific_user_from_db(
         "./db/users.db", int(user_id), get_db_cursor())
     if user:
@@ -239,48 +209,21 @@ async def get_specific_user(user_id: str):
 
 @app.get("/user/info")
 async def useInfo(reqest: Request):
+    # TODO: discuss and decide whether to drop or NOT
+    logging.info("useInfo endpoint accessed.")
+
     data = {
         "code": 200,
         "data": {
-            "roles": ["admin"],
-            "introduction": "I am a super administrator",
+            "roles": ["user"],
+            "introduction": "I am a user",
             "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-            "name": "Super Admin"
+            "name": "User Nobody"
         }
     }
     return {"data": data}
 
 # Ad Management
-
-
-@app.get("/ads/active_ads")
-async def get_active_ads():
-    """
-    TODO: Returns a list of active ads on the platform.
-
-    An ad is considered active if its 'object-url' field is not empty.
-
-    Returns:
-        A JSON response with a list of active ads.
-    """
-    active_ads = ad_management.get_active_ads_from_db(
-        "./db/ads.db", get_db_cursor())
-    return {"active_ads": active_ads}
-
-
-@app.get("/ads/total_ads")
-async def get_total_ads():
-    """
-    Returns the total number of ads on the platform.
-
-    Returns:
-        A JSON response with the total number of ads.
-    """
-    total_ads = ad_management.get_total_ads_from_db(
-        "./db/ads.db", get_db_cursor())
-    return {"total_ads": total_ads}
-
-
 @app.get("/ads/{ad_id}")
 async def get_specific_ad(ad_id: str):
     """
@@ -292,6 +235,8 @@ async def get_specific_ad(ad_id: str):
     Returns:
         A JSON response with the ad details.
     """
+    logging.info(f"get_specific_ad endpoint accessed with ad_id: {ad_id}")
+
     ad = ad_management.get_spcific_ad_from_db(
         "./db/ads.db", int(ad_id), get_db_cursor())
     if ad:
@@ -299,8 +244,23 @@ async def get_specific_ad(ad_id: str):
     else:
         return {"message": "Ad not found."}, 404
 
+@app.post("/advertisers/update")
+async def update_specific_ad(request: Request):
+    """
+    Updates a specific ad.
 
-@app.post("/ads/update")
+    Args:
+        ad_id:
+        adname:
+        creator:
+        object_url:
+
+    Returns:
+        A JSON response with the status of the update.
+    """
+    logging.info("update_specific_ad endpoint accessed. TODO: Needs Implementation.")
+
+@app.post("/ads/update", deprecated=True)
 async def update_specific_ad(request: Request):
     """
     Updates a specific ad on the platform.
@@ -314,6 +274,8 @@ async def update_specific_ad(request: Request):
     Returns:
         A JSON response with the status of the update.
     """
+    logging.info("update_specific_ad endpoint accessed.")
+
     # Get the updated ad data from the request body
     json_data = await request.json()
 
@@ -339,22 +301,6 @@ async def update_specific_ad(request: Request):
 
 # Advertiser Management
 
-
-@app.get("/advertisers/active_advertisers")
-async def get_active_advertisers(start_date: Optional[str] = None, end_date: Optional[str] = None,):
-    """
-    TODO: Returns the number of active advertisers within a specified date range.
-
-    Args:
-        start_date: Optional start date in YYYY-MM-DD format.
-        end_date: Optional end date in YYYY-MM-DD format.
-
-    Returns:
-        A JSON response with the number of active advertisers.
-    """
-    pass
-
-
 @app.post("/advertisers/create")
 async def create(request: Request):
     """
@@ -367,6 +313,8 @@ async def create(request: Request):
     Returns:
         A JSON response with the status of the creation.
     """
+    logging.info("create endpoint accessed.")
+
     try:
         # Get data from the request body
         json_data = await request.json()
@@ -411,6 +359,8 @@ async def get_matches_for_specifc_user(user_id):
     Returns:
         A JSON response with a list of ads.
     """
+    logging.info(f"get_matches_for_specifc_user endpoint accessed with user_id: {user_id}")
+
     total_ads = ad_management.get_total_ads_from_db(
         "./db/ads.db", get_db_cursor())
     num_ads_recommend = 11  # TODO: ADD to global config
@@ -421,6 +371,8 @@ async def get_matches_for_specifc_user(user_id):
 
 @app.get("/advertisers/getAdv")
 async def getAdv(request: Request):
+    logging.info("getAdv endpoint accessed.")
+
     print(request.headers.get("token"))
     userId = user_management.get_user_id_by_token(
         "./db/users.db", request.headers.get("token"), get_db_cursor())
@@ -441,8 +393,6 @@ async def getAdv(request: Request):
     print("advInfos:", advInfos)
     return SuccessResponseData(data={"advInfo": advInfos}, msg='获取成功')
 
-
-
 #注册相机拍摄的用户
 def register_user_by_camera(username,avatar_url,fashion_score,fashion_eval_reason):
 
@@ -458,10 +408,9 @@ def register_user_by_camera(username,avatar_url,fashion_score,fashion_eval_reaso
     else:
         return {"message": "Registration failed."}, 400
 
-
 #定时器 定时调用相机拍摄解析照片的相关方法
 #TODO: #未填写具体的方法内容
-schedule.every(10).seconds.do()
+#schedule.every(10).seconds.do()
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

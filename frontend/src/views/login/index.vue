@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">AIGC认知计算广告生成平台</h3>
-        <h3 class="title">登陆页面</h3>
+        <h3 class="title">登陆页</h3>
       </div>
 
       <el-form-item prop="username">
@@ -20,7 +20,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="用户名"
           name="username"
           type="text"
           tabindex="1"
@@ -43,7 +43,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -64,14 +64,14 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
+        >登录</el-button
       >
       <el-button
         :loading="loading"
-        type="primary"
+        type="info"
         style="width: 100%; margin-bottom: 30px; margin-left: 0px"
         @click.native.prevent="handleRegister"
-        >Register</el-button
+        >新用户注册</el-button
       >
     </el-form>
 
@@ -84,7 +84,8 @@
       <social-sign />
     </el-dialog>
 
-    <g-signin-button
+    <!-- Sign in with Google -->
+    <!-- <g-signin-button
       :params="googleSignInParams"
       @success="onSignInSuccess"
       @error="onSignInError"
@@ -96,8 +97,8 @@
           style="width: 50px; height: 50px"
         />
       </div>
-      <!-- Sign in with Google -->
-    </g-signin-button>
+    </g-signin-button> -->
+
     <!-- <g-signin-button>
       <component
         :is="'script'"
@@ -122,6 +123,7 @@
         data-logo_alignment="left"
       ></div>
     </g-signin-button> -->
+
   </div>
 </template>
 
@@ -136,14 +138,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error("请输入正确的用户名"));
       } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+        callback(new Error("请输入正确的密码"));
       } else {
         callback();
       }

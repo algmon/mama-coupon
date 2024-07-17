@@ -225,8 +225,10 @@ def login_user_to_db(db_path: str, username: str, password: str, db: object):
 
     # Hash the password using SHA-256
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    print("Login(...) is called.")
     print("username:" + username)
     print("hashed_password:" + hashed_password)
+    print()
     # Execute the query to get the user with the matching username and password
     db.execute("SELECT * FROM users WHERE username = %s AND password_hash = %s",
                (username, hashed_password))
