@@ -1,10 +1,10 @@
 <template>
   <div>
-    生成广告界面
+    广告主 创建 广告界面
     <el-input v-model="issue" placeholder="请输入内容" />
 
-    <el-input v-model="answer" type="textarea" :rows="2" placeholder="ai智聊" />
-    <el-button type="primary" round @click="getAnswer">智聊</el-button>
+    <el-input v-model="answer" type="textarea" :rows="2" placeholder="算法妈妈智聊" />
+    <el-button type="primary" round @click="getAnswer">算法妈妈智聊</el-button>
   </div>
 </template>
 

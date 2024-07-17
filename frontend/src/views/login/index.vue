@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">AIGC认知计算广告生成平台</h3>
-        <h3 class="title">用户登陆</h3>
+        <h3 class="title">登陆页面</h3>
       </div>
 
       <el-form-item prop="username">
@@ -73,25 +73,6 @@
         @click.native.prevent="handleRegister"
         >Register</el-button
       >
-
-      <div style="position: relative">
-        <div class="tips">
-          <span>Role1 : platform admin</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right: 18px">Role2 : advertiser</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right: 18px">Role3 : ad designer</span>
-        </div>
-        <el-button
-          class="thirdparty-button"
-          type="primary"
-          @click="showDialog = true"
-        >
-          Or connect with
-        </el-button>
-      </div>
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
@@ -169,8 +150,8 @@ export default {
     };
     return {
       loginForm: {
-        username: "yyn",
-        password: "123456",
+        username: "",
+        password: "",
       },
       loginRules: {
         username: [

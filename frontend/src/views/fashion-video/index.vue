@@ -7,10 +7,10 @@
         <!-- 点赞和收藏功能 -->
         <div class="actions">
           <span class="like" @click="like(item.id)">
-            <i class="el-icon-thumb"></i> Like
+            <i class="el-icon-thumb"></i> 喜欢
           </span>
           <span class="favorite" @click="favorite(item.id)">
-            <i class="el-icon-star-on"></i> Favorite
+            <i class="el-icon-star-on"></i> 收藏
           </span>
         </div>
       </div>

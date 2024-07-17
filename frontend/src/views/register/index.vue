@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">AIGC认知计算广告生成平台</h3>
-        <h3 class="title">用户注册</h3>
+        <h3 class="title">注册页面</h3>
       </div>
 
       <!-- 用户名 -->
