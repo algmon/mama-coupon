@@ -3,79 +3,20 @@
     <el-row :gutter="20">
       <el-col :span="8"
         ><div class="grid-content bg-purple">
-          <a class="document-btn" target="_blank" href="g"
-            >Suanfamama Official Website</a
-          >
-        </div>
-      </el-col>
-      <el-col :span="8"
-        ><div class="grid-content bg-purple">
-          <a
-            class="document-btn"
-            target="_blank"
-            href="https://www.suanfamama.com/docs/research/intro"
-            >妈妈技术解读</a
-          >
-        </div></el-col
-      >
-      <el-col :span="8"
-        ><div class="grid-content bg-purple">
-          <a
-            class="document-btn"
-            target="_blank"
-            href="https://panjiachen.github.io/vue-element-admin-site/"
-            >Frontend Docs</a
-          >
-        </div></el-col
-      >
-      <el-col :span="8"
-        ><div class="grid-content bg-purple">
-          <a
-            class="document-btn"
-            target="_blank"
-            href="https://github.com/PanJiaChen/vue-element-admin/"
-            >Frontend Docs</a
-          >
-        </div></el-col
-      >
-      <el-col :span="8"
-        ><div class="grid-content bg-purple">
-          <a
-            class="document-btn"
-            target="_blank"
-            href="https://github.com/PanJiaChen/vue-element-admin/"
-            >Frontend Docs</a
-          >
-        </div></el-col
-      >
-      <el-col :span="8"
-        ><div class="grid-content bg-purple">
           <dropdown-menu
             class="document-btn"
             :items="articleList"
-            title="系列前端技术文章"
+            title="前端系列技术文章"
           /></div
       ></el-col>
-      <el-col :span="8"
-        ><div class="grid-content bg-purple">
-          <router-link to="/fashion" class="document-btn"
-            >fashion-video</router-link
-          >
-        </div></el-col
-      >
     </el-row>
 
     <!-- 确保 iframe 填满整个 .el-col-24 -->
-    <iframe
+    <!-- <iframe
       class="full-screen-iframe"
       src="https://huggingface.co/spaces/weijiang2024/Suanfamama_AIGC_alg1"
       width="800px"
-    />
-    <iframe
-      class="full-screen-iframe"
-      src="https://huggingface.co/spaces/weijiang2024/Suanfamama_AIGC_alg3"
-      width="800px"
-    />
+    />-->
   </div>
 </template>
 

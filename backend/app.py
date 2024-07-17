@@ -156,6 +156,20 @@ async def login_user(request: Request):
         return ErrorResponseData(501, "User Login failed.")
     #    return SuccessResponseData(data={"advInfo": advInfos},msg='获取成功')
 
+@app.post("/users/logout")
+async def logout_user(request: Request, db: cursor.MySQLCursor = Depends(get_db_cursor)):
+    """
+    Logs out a user from the platform.
+
+    Args:
+        token: The user's authentication token.
+
+    Returns:
+        A JSON response indicating the success or failure of the logout.
+    """
+    logging.info("logout_user endpoint accessed.")
+    # TODO: Needs Implementation
+    pass
 
 @app.post("/users/register")
 async def register_user(request: Request, db: cursor.MySQLCursor = Depends(get_db_cursor)):
