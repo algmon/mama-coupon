@@ -13,7 +13,7 @@ class Interceptor(BaseHTTPMiddleware):
         # 从请求头中获取 token
         # 开发者用户
         # 放行api
-        doJson = {"/users/login", "/users/register"}
+        doJson = {"/users/login", "/users/register", "/", "/docs", "/openapi.json"}
         for url in doJson:
             if request.url.path == url:
                 response = await call_next(request)

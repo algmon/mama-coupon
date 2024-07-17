@@ -55,7 +55,7 @@ app = FastAPI()
 # 定义中间件类
 
 
-app.include_router(api_aiChat, prefix="/aiChat", tags=["linkai聊天接口"])
+app.include_router(api_aiChat, prefix="/aiChat", tags=["算法妈妈多模态能力接口"])
 app.include_router(api_fashion_video, prefix="/fashionVideo", tags=["时尚接口"])
 # 注册中间件
 
