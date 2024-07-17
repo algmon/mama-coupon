@@ -162,6 +162,11 @@ export default {
         .register(this.registerForm)
         .then((response) => {
           console.log("12");
+          this.$router.push({
+            // path: this.redirect || "/",
+            path: "/login",
+            query: this.otherQuery,
+          });
         })
         .catch((error) => {
           // 打印错误信息
