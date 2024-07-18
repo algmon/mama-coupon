@@ -1,7 +1,7 @@
 import requests
 import os
 
-def say_hi():
+def say_hi(query):
     url = os.environ["LINKAI_HOST"]
     headers = {
         "Content-Type": "application/json",
@@ -12,14 +12,14 @@ def say_hi():
         "messages": [
             {
                 "role": "user",
-                "content": "你好，请问目前你有什么重要的时尚法则？"
+                "content": query
             }
         ]
     }
     res = requests.post(url, json=body, headers=headers)
     if res.status_code == 200:
         reply_text = res.json().get("choices")[0]['message']['content']
-        print(reply_text)
+        print("AI时尚买手张优玲:", reply_text)
     else:
         error = res.json().get("error")
         print(f"请求异常, 错误码={res.status_code}, 错误类型={error.get('type')}, 错误信息={error.get('message')}")
@@ -58,5 +58,8 @@ def eval_fashion_person():
         error = res.json().get("error")
         print(f"请求异常, 错误码={res.status_code}, 错误类型={error.get('type')}, 错误信息={error.get('message')}")
 
-say_hi()
-eval_fashion_person()
+#query="您好，请问目前你有什么重要的时尚法则？"
+query="您好，我想咨询一下什么才是您心中真正的时尚？"
+print(f"算法妈妈助理小妈妈: {query}")
+say_hi(query)
+#eval_fashion_person()

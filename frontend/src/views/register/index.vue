@@ -10,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">AIGC认知计算广告生成平台</h3>
-        <h3 class="title">注册页面</h3>
+        <h3 class="title">注册页</h3>
       </div>
 
       <!-- 用户名 -->
@@ -98,6 +98,15 @@
         @click.native.prevent="handleRegister"
         >注册</el-button
       >
+
+      <el-button
+        :loading="loading"
+        type="info"
+        style="width: 100%; margin-bottom: 30px; margin-left: 0px"
+        @click.native.prevent="handleLogin"
+        >已有用户登录</el-button
+      >
+      
     </el-form>
   </div>
 </template>
@@ -155,6 +164,17 @@ export default {
   methods: {
     showPwd() {
       // 显示或隐藏密码逻辑
+    },
+    handleLogin() {
+      // this.$refs.loginForm.validate((valid) => {
+      // if (valid) {
+      this.loading = true;
+      this.$store;
+      this.$router.push({
+        // path: this.redirect || "/",
+        path: "/login",
+        query: this.otherQuery,
+      });
     },
     handleRegister() {
       // 注册逻辑

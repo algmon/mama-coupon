@@ -117,6 +117,33 @@ export const constantRoutes = [
       },
     ],
   },
+
+  {
+    path: "/create",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/create/index"),
+        name: " ",
+        meta: { title: "Create", icon: "documentation", affix: true },
+      },
+    ],
+  },
+
+  {
+    path: "/explore",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/explore/index"),
+        name: " ",
+        meta: { title: "Explore", icon: "documentation", affix: true },
+      },
+    ],
+  },
+
   {
     path: "/create-adv",
     component: Layout,
@@ -199,18 +226,18 @@ export const asyncRoutes = [
   //     ],
   //   },
 
-  // {
-  //   path: "/icon",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/icons/index"),
-  //       name: "Icons",
-  //       meta: { title: "Icons", icon: "icon", noCache: true },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/icon",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/icons/index"),
+        name: "Icons",
+        meta: { title: "Icons", icon: "icon", noCache: true },
+      },
+    ],
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
@@ -230,43 +257,43 @@ export const asyncRoutes = [
   //   ],
   // },
 
-  // {
-  //   path: "/error",
-  //   component: Layout,
-  //   redirect: "noRedirect",
-  //   name: "ErrorPages",
-  //   meta: {
-  //     title: "Error Pages",
-  //     icon: "404",
-  //   },
-  //   children: [
-  //     {
-  //       path: "401",
-  //       component: () => import("@/views/error-page/401"),
-  //       name: "Page401",
-  //       meta: { title: "401", noCache: true },
-  //     },
-  //     {
-  //       path: "404",
-  //       component: () => import("@/views/error-page/404"),
-  //       name: "Page404",
-  //       meta: { title: "404", noCache: true },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/error",
+    component: Layout,
+    redirect: "noRedirect",
+    name: "ErrorPages",
+    meta: {
+      title: "Error Pages",
+      icon: "404",
+    },
+    children: [
+      {
+        path: "401",
+        component: () => import("@/views/error-page/401"),
+        name: "Page401",
+        meta: { title: "401", noCache: true },
+      },
+      {
+        path: "404",
+        component: () => import("@/views/error-page/404"),
+        name: "Page404",
+        meta: { title: "404", noCache: true },
+      },
+    ],
+  },
 
-  // {
-  //   path: "/error-log",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "log",
-  //       component: () => import("@/views/error-log/index"),
-  //       name: "ErrorLog",
-  //       meta: { title: "Error Log", icon: "bug" },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/error-log",
+    component: Layout,
+    children: [
+      {
+        path: "log",
+        component: () => import("@/views/error-log/index"),
+        name: "ErrorLog",
+        meta: { title: "Error Log", icon: "bug" },
+      },
+    ],
+  },
 
   // {
   //   path: "/excel",
@@ -305,18 +332,19 @@ export const asyncRoutes = [
   //   ],
   // },
 
-  // {
-  //   path: "/theme",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/theme/index"),
-  //       name: "Theme",
-  //       meta: { title: "Theme", icon: "theme" },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/theme",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/theme/index"),
+        name: "Theme",
+        meta: { title: "Theme", icon: "theme" },
+      },
+    ],
+  },
+
   {
     path: "/fashion",
     component: () => import("@/views/fashion-video/index"),
