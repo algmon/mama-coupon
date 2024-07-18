@@ -10,3 +10,4 @@
 9. 我们使用AI代码辅助编写工具, 在编写程序时，使用MarsCode: AI Coding Assistant（国内）或Gemini Code Assist（国外）以辅助 AI编程助手测评：GitHub Copilot vs 豆包 MarsCode, 阮一峰, 2012年7月5日 https://www.ruanyifeng.com/blog/2024/07/copilot-vs-marscode.html
 10. 我们使用Github Issues和看板 (Github Projects)以进行产品及项目进度管理。参考：如何使用Issue以管理软件项目？阮一峰, 2017年8月29日, https://www.ruanyifeng.com/blog/2017/08/issue.html
 11. 我们遵循阮一峰老师的RESTful API最佳实践，并在此基础上作微创新。参考：RESTful API最佳实践 阮一峰, 2018年10月3日, https://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html
+12. 如何高效合理使用Docker。参考：Docker 入门教程 阮一峰, 2018年2月9日, https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
