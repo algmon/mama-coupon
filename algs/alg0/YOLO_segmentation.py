@@ -12,7 +12,7 @@ def camera_segmentation(model, cap, img_size=(1920,1088), save_txt=False, save_c
     return results
 
 # 循环读取摄像头推理
-def reuse_camera_segmentation(model, camera_num=1, box=True, save_txt=False, save_crop=False):
+def reuse_camera_segmentation(model, camera_num=0, box=True, save_txt=False, save_crop=False):
 
     # 将模型加载到图形计算设备
     model = load_device(model)

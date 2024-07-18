@@ -1,15 +1,33 @@
+import unittest
+from datetime import datetime
+
+import schedule
+from fastapi import FastAPI
+
 from utils import *
 from YOLO_segmentation import *
 import sys
-import os
+from pathlib import Path
+import user_management
 
-# 获取上级两级目录的路径
-parent_dir = os.path.dirname(os.path.dirname('backend/app.py'))
+app = FastAPI()
 
-# 将上级目录添加到模块搜索路径
-sys.path.append(parent_dir)
 
-import register_user_by_camera
+#相关注册方法
+def register_user_by_camera(username,avatar_url,fashion_score,fashion_eval_reason):
+
+    now = datetime.now()
+    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    last_updated_at = formatted_now
+    is_active = "1"
+    success = user_management.register_user_by_camera_to_db(
+        "./db/users.db", username, last_updated_at, is_active, avatar_url, fashion_score, fashion_eval_reason,  app.state.db.cursor())
+
+    if success:
+        return {"message": "User Registration successful.", "code": 200}
+    else:
+        return {"message": "Registration failed."}, 400
+
 
 # 使用摄像头发现行人并注册
 def person_register():
@@ -25,7 +43,7 @@ def person_register():
     file_path = './temp.png'
 
     # 加载摄像头
-    cap = load_camera(1)
+    cap = load_camera(0)
 
     # 调用模型推理
     out = camera_segmentation(model, cap)
@@ -55,7 +73,11 @@ def person_register():
 
         # return person_name, img_url, score, conclusion
 
+schedule.every(10).seconds.do(person_register())
+
 if __name__ == '__main__':
-    person_name, img_url, score, conclusion = person_register()
+    schedule.run_pending()  # 运行所有可以运行的任务
+    time.sleep(1)  # 等待一秒
+    print("")
     # print(person_name, img_url, score, conclusion)
 
