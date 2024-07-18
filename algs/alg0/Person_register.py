@@ -9,7 +9,7 @@ parent_dir = os.path.dirname(os.path.dirname('backend/app.py'))
 # 将上级目录添加到模块搜索路径
 sys.path.append(parent_dir)
 
-import register_user_by_camera
+# from ....backend import register_user_by_camera
 
 # 使用摄像头发现行人并注册
 def person_register():
@@ -51,11 +51,11 @@ def person_register():
         score, conclusion = get_score_conclusion(img_url)
 
         # 进行被动用户注册
-        register_user_by_camera (person_name, img_url, score, conclusion)
+        # register_user_by_camera (person_name, img_url, score, conclusion)
 
         # return person_name, img_url, score, conclusion
 
 if __name__ == '__main__':
-    person_name, img_url, score, conclusion = person_register()
+    person_register()
     # print(person_name, img_url, score, conclusion)
 
