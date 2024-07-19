@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def get_total_ads_from_db(db_path: str, db: object):
     """
     Retrieves the total number of ads from the database.
@@ -27,6 +28,7 @@ def get_total_ads_from_db(db_path: str, db: object):
     # conn.close()
 
     return total_ads
+
 
 def get_ads_from_db(db_path: str, db: object):
     """
@@ -59,6 +61,7 @@ def get_ads_from_db(db_path: str, db: object):
 
     return ads
 
+
 def get_spcific_ad_from_db(db_path: str, ad_id: int, db: object):
     """
     Gets a specific ad from a SQLite database based on its ID.
@@ -84,7 +87,24 @@ def get_spcific_ad_from_db(db_path: str, ad_id: int, db: object):
 
     if row:
         # Convert the row to a dictionary
-        ad = dict(id=row[0], adname=row[1], creator=row[2], object_url=row[3])
+        ad = {
+            'id': row[0] if len(row) > 0 else None,
+            'adname': row[1] if len(row) > 1 else None,
+            'creator': row[2] if len(row) > 2 else None,
+            'object_url': row[3] if len(row) > 3 else None,
+            'created_at': row[4] if len(row) > 4 else None,
+            'attributes': row[5] if len(row) > 5 else None,
+            'content': row[6] if len(row) > 6 else None,
+            'target_group': row[7] if len(row) > 7 else None,
+            'last_updated_at': row[8] if len(row) > 8 else None,
+            'is_active': row[9] if len(row) > 9 else None,
+            'aigc_image_gen_engine': row[10] if len(row) > 10 else None,
+            'aigc_text_gen_engine': row[11] if len(row) > 11 else None,
+            'aigc_sound_gen_engine': row[12] if len(row) > 12 else None,
+            'prompt_for_image_gen': row[13] if len(row) > 13 else None,
+            'like': row[14] if len(row) > 14 else None,
+            'dislike': row[15] if len(row) > 15 else None
+        }
         return ad
     else:
         return None

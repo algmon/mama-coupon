@@ -77,6 +77,12 @@ app.add_middleware(
 app.state.db = None
 # 应用程序启动和关闭事件
 
+@app.middleware("http")
+async def db_session_middleware(request: Request, call_next):
+    request.state.db = get_db_connection()
+    response = await call_next(request)
+    return response
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -422,6 +428,7 @@ async def getAdv(request: Request):
         userId, total_ads, num_ads_recommend)
     # 访问 'matches' 列表
     matched_ads_list = (ads[0].get('matched_ads', []))
+    # matched_ads_list = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]   # 假设匹配到的广告列表
     # 现在 matched_ads_list 包含了您需要的列表
     print("matched_ads_list:", matched_ads_list)
     for adv in matched_ads_list:
@@ -429,7 +436,65 @@ async def getAdv(request: Request):
             "./db/ads.db", int(adv), get_db_cursor())
         advInfos.append(advInfo)
     print("advInfos:", advInfos)
-    return SuccessResponseData(data={"advInfo": advInfos}, msg='获取成功')
+
+    # 回显用户喜欢与不感兴趣的广告
+    db = user_management.get_like_dislike_ads_from_db(userId[0], get_db_cursor())
+
+    if (db != None):
+        return SuccessResponseData(data={"advInfo": advInfos, "ads_list": matched_ads_list, "like": db[0], "dislike": db[1]}, msg='获取成功')
+    else:
+        return SuccessResponseData(data={"advInfo": advInfos, "ads_list": matched_ads_list}, msg='获取成功')
+
+
+@app.post("/users/like")
+async def like(request: Request):
+    # 获取请求体中的数据
+    request_body = await request.json()
+    # 获取用户ID
+    userId = user_management.get_user_id_by_token(
+        "./db/users.db", request.headers.get("token"), get_db_cursor()
+    )
+    user_id = userId[0]
+    # 广告ID
+    ads_id = request_body.get("ads_id")
+
+    db = user_management.like_ads_to_db(user_id, ads_id, get_db_cursor())
+    # 返回响应
+    return SuccessResponseData(data= db, msg='操作成功')
+
+
+@app.post("/users/dislike")
+async def dislike(request: Request):
+    # 获取请求体中的数据
+    request_body = await request.json()
+    # 获取用户ID
+    userId = user_management.get_user_id_by_token(
+        "./db/users.db", request.headers.get("token"), get_db_cursor()
+    )
+    user_id = userId[0]
+    # 广告ID
+    ads_id = request_body.get("ads_id")
+
+    db = user_management.dislike_ads_to_db(user_id, ads_id, get_db_cursor())
+    # 返回响应
+    return SuccessResponseData(data= db, msg='操作成功')
+
+
+@app.post("/users/dragAndDrop")
+async def dragAndDrop(request: Request):
+    #TODO: 实现此接口
+    request_body = await request.json()
+    # 获取用户ID
+    userId = user_management.get_user_id_by_token(
+        "./db/users.db", request.headers.get("token"), get_db_cursor())
+    user_id = userId[0]
+    # 广告ID组
+    ads_id_list = request_body.get("ads_id_list")
+
+    user_management.drag_and_drop_ads_to_db(user_id, ads_id_list, get_db_cursor())
+
+    return SuccessResponseData(data="", msg='操作成功')
+
 
 
 if __name__ == "__main__":

@@ -14,6 +14,8 @@ import App from "./App";
 import store from "./store";
 import router from "./router";
 
+import axios from 'axios';
+
 import "./icons"; // icon
 import "./permission"; // permission control
 import "./utils/error-log"; // error log

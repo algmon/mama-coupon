@@ -36,6 +36,13 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    // 前端跨域
+    // proxy: {
+    //   '/': {
+    //     target: 'http://127.0.0.1:8000',
+    //     changeOrigin: true,
+    //   },
+    // },
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {

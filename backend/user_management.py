@@ -178,7 +178,7 @@ def register_user_to_db(db_path: str,
     # # Close the database connection
     # conn.close()
     # db = await get_db()
-# 检查用户名是否已存在
+    # 检查用户名是否已存在
     db.execute("SELECT * FROM users WHERE username = %s", (username,))
     user = db.fetchone()
     db.execute("SELECT * FROM users WHERE phone = %s", (phone,))
@@ -297,3 +297,190 @@ def get_user_by_developer_token(mama_api_key: str, db: object):
     userInfo = db.fetchone()
 
     return userInfo
+
+
+def like_ads_to_db(user_id: str, ads_id: str, db: object):
+    db.execute("""SELECT * FROM user_ads WHERE user_id = %s""", (user_id,))
+    fetchone = db.fetchone()
+    if fetchone:
+        db.execute("""SELECT user_like FROM user_ads WHERE user_id = %s""", (user_id,))
+        db_fetchone = db.fetchone()
+        if db_fetchone[0] is not None:
+            s = list(db_fetchone)
+            if isinstance(s[0], str):
+                # 尝试将字符串转换为列表
+                try:
+                    s[0] = eval(s[0])
+                except Exception as e:
+                    print(f"将字符串转换为列表时出错: {e}")
+                    return None
+            if isinstance(s[0], list):
+                # 检查列表中是否包含传入的 ads_id
+                if int(ads_id) in s[0]:
+                    s[0].remove(int(ads_id))
+                    db.execute("""SELECT `like` FROM ads WHERE id = %s""", (ads_id,))
+                    likeNum = db.fetchone()[0]  # 获取 like 字段的值
+                    db.execute("""UPDATE ads SET `like` = %s WHERE id = %s""", (likeNum - 1, ads_id))
+                else:
+                    s[0].append(int(ads_id))
+                    db.execute("""SELECT `like` FROM ads WHERE id = %s""", (ads_id,))
+                    likeNum = db.fetchone()[0]  # 获取 like 字段的值
+                    db.execute("""UPDATE ads SET `like` = %s WHERE id = %s""", (likeNum + 1, ads_id))
+                    db.execute("""select user_like from user_ads where user_id = %s""", (user_id,))
+                    db.fetchone()
+                updated_ads_id = str(s[0])
+                sql = """UPDATE user_ads SET user_like = %s WHERE user_id = %s"""
+                db.execute(sql, (updated_ads_id, user_id))
+                return updated_ads_id
+            else:
+                print("s[0] 不是列表")
+        else:
+            ads_id_list = "[" + str(ads_id) + "]"
+            sql = """UPDATE user_ads SET user_like = %s WHERE user_id = %s"""
+            db.execute(sql, (ads_id_list, user_id))
+            db.execute("""SELECT dislike FROM ads WHERE id = %s""", (ads_id,))
+            fetch_dislike = db.fetchone()
+            if fetch_dislike:
+                likeNum = fetch_dislike[0]  # 获取 like 字段的值
+                db.execute("""UPDATE ads SET `like` = %s WHERE id = %s""", (likeNum + 1, ads_id))
+            else:
+                print(f"广告 ID {ads_id} 不存在")
+            return ads_id_list
+        return None
+    else:
+        ads_id_list = "[" + str(ads_id) + "]"
+        sql = """INSERT INTO user_ads (user_id, user_like) VALUES (%s, %s)"""
+        db.execute(sql, (user_id, ads_id_list))
+        db.execute("""SELECT `like` FROM ads WHERE id = %s""", (ads_id,))
+        likeNum = db.fetchone()[0]  # 获取 like 字段的值
+        db.execute("""UPDATE ads SET `like` = %s WHERE id = %s""", (likeNum + 1, ads_id))
+        return ads_id_list
+
+
+
+
+def dislike_ads_to_db(user_id: str, ads_id: str, db: object):
+    db.execute("""SELECT * FROM user_ads WHERE user_id = %s""", (user_id,))
+    fetchone1 = db.fetchone()
+    if fetchone1:
+        db.execute("""SELECT user_dislike FROM user_ads WHERE user_id = %s""", (user_id,))
+        fetchone = db.fetchone()
+        if fetchone[0] is not None:
+            db.execute("""SELECT user_dislike FROM user_ads WHERE user_id = %s""", (user_id,))
+            db_fetchone = db.fetchone()
+            if db_fetchone:
+                s = list(db_fetchone)
+                if isinstance(s[0], str):
+                    # 尝试将字符串转换为列表
+                    try:
+                        s[0] = eval(s[0])
+                    except Exception as e:
+                        print(f"将字符串转换为列表时出错: {e}")
+                        return None
+                if isinstance(s[0], list):
+                    # 检查列表中是否包含传入的 ads_id
+                    if int(ads_id) in s[0]:
+                        s[0].remove(int(ads_id))
+                        db.execute("""SELECT dislike FROM ads WHERE id = %s""", (ads_id,))
+                        fetch_dislike = db.fetchone()
+                        if fetch_dislike:
+                            dislikeNum = fetch_dislike[0]  # 获取 dislike 字段的值
+                            db.execute("""UPDATE ads SET dislike = %s WHERE id = %s""", (dislikeNum - 1, ads_id))
+                        else:
+                            print(f"广告 ID {ads_id} 不存在")
+                    else:
+                        s[0].append(int(ads_id))
+                        db.execute("""SELECT dislike FROM ads WHERE id = %s""", (ads_id,))
+                        fetch_dislike = db.fetchone()
+                        if fetch_dislike:
+                            dislikeNum = fetch_dislike[0]  # 获取 dislike 字段的值
+                            db.execute("""UPDATE ads SET dislike = %s WHERE id = %s""", (dislikeNum + 1, ads_id))
+                        else:
+                            print(f"广告 ID {ads_id} 不存在")
+                    updated_ads_id = str(s[0])
+                    sql = """UPDATE user_ads SET user_dislike = %s WHERE user_id = %s"""
+                    db.execute(sql, (updated_ads_id, user_id))
+                    return updated_ads_id
+                else:
+                    print("s[0] 不是列表")
+            return None
+        else:
+            ads_id_list = "[" + str(ads_id) + "]"
+            sql = """UPDATE user_ads SET user_dislike = %s WHERE user_id = %s"""
+            db.execute(sql, (ads_id_list, user_id))
+            db.execute("""SELECT dislike FROM ads WHERE id = %s""", (ads_id,))
+            fetch_dislike = db.fetchone()
+            if fetch_dislike:
+                dislikeNum = fetch_dislike[0]  # 获取 dislike 字段的值
+                db.execute("""UPDATE ads SET dislike = %s WHERE id = %s""", (dislikeNum + 1, ads_id))
+            else:
+                print(f"广告 ID {ads_id} 不存在")
+            return ads_id_list
+        return None
+    else:
+        ads_id_list = "[" + str(ads_id) + "]"
+        sql = """INSERT INTO user_ads (user_id, user_dislike) VALUES (%s, %s)"""
+        db.execute(sql, (user_id, ads_id_list))
+        db.execute("""SELECT dislike FROM ads WHERE id = %s""", (ads_id,))
+        fetch_dislike = db.fetchone()
+        if fetch_dislike:
+            dislikeNum = fetch_dislike[0]  # 获取 dislike 字段的值
+            db.execute("""UPDATE ads SET dislike = %s WHERE id = %s""", (dislikeNum + 1, ads_id))
+        else:
+            print(f"广告 ID {ads_id} 不存在")
+        return ads_id_list
+    return None
+
+
+def get_like_dislike_ads_from_db(user_id: str, db: object):
+    db.execute("""select user_like, user_dislike from user_ads where user_id = %s""", (user_id,))
+    fetchone = db.fetchone()
+    if fetchone:
+        return fetchone
+    else:
+        return None
+
+
+def drag_and_drop_ads_to_db(user_id: str, ads_id_list: list, db: object):
+    def fetch_user_drag_and_drop(user_id):
+        db.execute("""select user_drag_and_drop from user_ads where user_id = %s""", (user_id,))
+        fetchone = db.fetchone()
+        if fetchone and fetchone[0] is not None:
+            return fetchone[0]
+        return None
+
+    def update_user_drag_and_drop(user_id, updated_ads_id):
+        sql = """UPDATE user_ads SET user_drag_and_drop = %s WHERE user_id = %s"""
+        db.execute(sql, (updated_ads_id, user_id))
+
+    def insert_user_drag_and_drop(user_id, ads_id_list):
+        sql = """INSERT INTO user_ads (user_id, user_drag_and_drop) VALUES (%s, %s)"""
+        db.execute(sql, (user_id, str(ads_id_list)))
+
+    db.execute("""select * from user_ads where user_id = %s""", (user_id,))
+    fetchone = db.fetchone()
+    if fetchone:
+        # 如果不是新用户
+        user_drag_and_drop = fetch_user_drag_and_drop(user_id)
+        if user_drag_and_drop:
+            # 如果用户已经有拖拽的数据
+            try:
+                if isinstance(user_drag_and_drop, str):
+                    user_drag_and_drop = eval(user_drag_and_drop)
+                if isinstance(user_drag_and_drop, list):
+                    for ads_id in ads_id_list:
+                        if int(ads_id) not in user_drag_and_drop:
+                            user_drag_and_drop.append(int(ads_id))
+                    update_user_drag_and_drop(user_id, str(user_drag_and_drop))
+                else:
+                    raise ValueError("user_drag_and_drop 不是列表")
+            except Exception as e:
+                print(f"处理用户拖拽数据时出错: {e}")
+                return False
+        else:
+            # 如果用户没有拖拽的数据, 则先插入拖拽的数据
+            update_user_drag_and_drop(user_id, str(ads_id_list))
+    else:
+        # 如果是新用户, 就给添加以用户数据
+        insert_user_drag_and_drop(user_id, ads_id_list)
+    return True
