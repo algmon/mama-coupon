@@ -1,11 +1,19 @@
-# AIGC认知计算广告平台设计文档
+# 系统设计文档
 ## User Management Module
+* user_management.py
 * 不存储用户密码明文，但存储密码的哈希值用于平台登录逻辑
+* 目前 不提供 删除用户 API
+
+## Advertiser Management Module
+* advertiser_management.py
 
 ## Ad Management Module
+* ad_management.py
 * 广告本身以对象存储于主流厂商Key-Value对中
+* 目前 不提供 删除广告 API
 
 ## Recommendation Module
+* recommendation_management.py
 * 核心算法适配大数据环境，由SLA规定平台性能
 
 ## APIs

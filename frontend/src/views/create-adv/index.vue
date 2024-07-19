@@ -1,5 +1,6 @@
 <template>
   <div>
+    广告主 创建 广告界面
     <el-input v-model="issue" placeholder="请输入内容" />
 
     <el-input v-model="answer" type="textarea" :rows="2" placeholder="算法妈妈智聊" />
@@ -8,26 +9,26 @@
 </template>
 
 <script>
-import * as chat from '@/api/aiChat'
+import * as chat from "@/api/aiChat";
 
 export default {
-  name: 'AiChat',
+  name: "AiChat",
   data() {
     return {
-      issue: '',
-      answer: ''
-    }
+      issue: "",
+      answer: "",
+    };
   },
   methods: {
     getAnswer() {
-      var data = { issue: this.issue }
+      var data = { issue: this.issue };
       chat.fetchAnswer(data).then((response) => {
-        this.answer = response.data.answer
-        console.log(response)
-      })
-    }
-  }
-}
+        this.answer = response.data.answer;
+        console.log(response);
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

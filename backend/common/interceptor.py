@@ -7,6 +7,7 @@ import base64
 
 class Interceptor(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
+        token1 = request.headers.get("Token")
         db = get_db_connection()
         # 放行api
         doJson = {"/users/login", "/users/register", "/docs", "/openapi.json"}

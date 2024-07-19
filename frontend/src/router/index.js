@@ -119,6 +119,51 @@ export const constantRoutes = [
   },
 
   {
+    path: "/create",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/create/index"),
+        name: " ",
+        meta: { title: "Create", icon: "documentation", affix: true },
+      },
+    ],
+  },
+
+  {
+    path: "/explore",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/explore/index"),
+        name: " ",
+        meta: { title: "Explore", icon: "documentation", affix: true },
+      },
+    ],
+  },
+
+  {
+    path: "/create-adv",
+    component: Layout,
+    redirect: "noRedirect",
+    name: "create-adv",
+    meta: {
+      title: "create-adv",
+      icon: "create-adv",
+    },
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/create-adv/index"),
+        name: " ",
+        meta: { title: "create-adv", icon: "documentation", affix: true },
+      },
+    ],
+  },
+
+  {
     path: "/profile",
     component: Layout,
     redirect: "/profile/index",
@@ -181,18 +226,18 @@ export const asyncRoutes = [
   //     ],
   //   },
 
-  // {
-  //   path: "/icon",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/icons/index"),
-  //       name: "Icons",
-  //       meta: { title: "Icons", icon: "icon", noCache: true },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/icon",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/icons/index"),
+        name: "Icons",
+        meta: { title: "Icons", icon: "icon", noCache: true },
+      },
+    ],
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
@@ -212,43 +257,43 @@ export const asyncRoutes = [
   //   ],
   // },
 
-  // {
-  //   path: "/error",
-  //   component: Layout,
-  //   redirect: "noRedirect",
-  //   name: "ErrorPages",
-  //   meta: {
-  //     title: "Error Pages",
-  //     icon: "404",
-  //   },
-  //   children: [
-  //     {
-  //       path: "401",
-  //       component: () => import("@/views/error-page/401"),
-  //       name: "Page401",
-  //       meta: { title: "401", noCache: true },
-  //     },
-  //     {
-  //       path: "404",
-  //       component: () => import("@/views/error-page/404"),
-  //       name: "Page404",
-  //       meta: { title: "404", noCache: true },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/error",
+    component: Layout,
+    redirect: "noRedirect",
+    name: "ErrorPages",
+    meta: {
+      title: "Error Pages",
+      icon: "404",
+    },
+    children: [
+      {
+        path: "401",
+        component: () => import("@/views/error-page/401"),
+        name: "Page401",
+        meta: { title: "401", noCache: true },
+      },
+      {
+        path: "404",
+        component: () => import("@/views/error-page/404"),
+        name: "Page404",
+        meta: { title: "404", noCache: true },
+      },
+    ],
+  },
 
-  // {
-  //   path: "/error-log",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "log",
-  //       component: () => import("@/views/error-log/index"),
-  //       name: "ErrorLog",
-  //       meta: { title: "Error Log", icon: "bug" },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/error-log",
+    component: Layout,
+    children: [
+      {
+        path: "log",
+        component: () => import("@/views/error-log/index"),
+        name: "ErrorLog",
+        meta: { title: "Error Log", icon: "bug" },
+      },
+    ],
+  },
 
   // {
   //   path: "/excel",
@@ -287,18 +332,19 @@ export const asyncRoutes = [
   //   ],
   // },
 
-  // {
-  //   path: "/theme",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/theme/index"),
-  //       name: "Theme",
-  //       meta: { title: "Theme", icon: "theme" },
-  //     },
-  //   ],
-  // },
+  {
+    path: "/theme",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/theme/index"),
+        name: "Theme",
+        meta: { title: "Theme", icon: "theme" },
+      },
+    ],
+  },
+
   {
     path: "/fashion",
     component: () => import("@/views/fashion-video/index"),
@@ -316,6 +362,42 @@ const createRouter = () =>
   });
 
 const router = createRouter();
+
+// 辅助函数，用于从cookie中获取token
+function getTokenFromCookie() {
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    // 去除每个cookie字符串的首尾空白字符
+    const cookie = cookies[i].trim();
+    console.log("cookies:", cookie);
+    // 检查当前cookie是否包含我们需要的键名
+    if (cookie.startsWith("token")) {
+      //   // 如果找到了，解码并返回该cookie的值
+      const token = cookie.substring("token".length + 1);
+      return token;
+    }
+  }
+  return null;
+}
+
+// 全局路由守卫
+router.beforeEach((to, from, next) => {
+  // 从cookie中获取token
+  const token = getTokenFromCookie();
+  // 检查token是否存在以及用户的登录状态
+  const isAuth = token;
+
+  if (to.path != "/login" && to.path != "/register" && isAuth == null) {
+    // 如果用户已经登录，但尝试访问登录页面，则重定向到首页
+    next("/login");
+  } else if (to.path != "/login" && to.path != "/register" && isAuth == null) {
+    // 如果用户已经登录，但尝试访问登录页面，则重定向到首页
+    next("/register");
+  } else {
+    // 如果用户已登录或访问的是登录页面，则允许访问
+    next();
+  }
+});
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {

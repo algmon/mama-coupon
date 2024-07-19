@@ -9,10 +9,9 @@ scikit-learn
 pandas
 gradio_client
 mysql-connector-python
-
-# Development dependencies
+starlette
+schedule
+logging
 
 # Testing dependencies
 pytest
-
-starlette

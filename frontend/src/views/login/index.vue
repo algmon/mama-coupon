@@ -7,10 +7,11 @@
       class="login-form"
       autocomplete="on"
       label-position="left"
+      name="loginForm"
     >
       <div class="title-container">
         <h3 class="title">AIGC认知计算广告生成平台</h3>
-        <h3 class="title">用户登陆</h3>
+        <h3 class="title">登陆页</h3>
       </div>
 
       <el-form-item prop="username">
@@ -20,7 +21,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="用户名"
           name="username"
           type="text"
           tabindex="1"
@@ -43,7 +44,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -64,34 +65,15 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
+        >登录</el-button
       >
       <el-button
         :loading="loading"
-        type="primary"
+        type="info"
         style="width: 100%; margin-bottom: 30px; margin-left: 0px"
         @click.native.prevent="handleRegister"
-        >Register</el-button
+        >新用户注册</el-button
       >
-
-      <div style="position: relative">
-        <div class="tips">
-          <span>Role1 : platform admin</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right: 18px">Role2 : advertiser</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right: 18px">Role3 : ad designer</span>
-        </div>
-        <el-button
-          class="thirdparty-button"
-          type="primary"
-          @click="showDialog = true"
-        >
-          Or connect with
-        </el-button>
-      </div>
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
@@ -103,7 +85,8 @@
       <social-sign />
     </el-dialog>
 
-    <g-signin-button
+    <!-- Sign in with Google -->
+    <!-- <g-signin-button
       :params="googleSignInParams"
       @success="onSignInSuccess"
       @error="onSignInError"
@@ -115,8 +98,8 @@
           style="width: 50px; height: 50px"
         />
       </div>
-      <!-- Sign in with Google -->
-    </g-signin-button>
+    </g-signin-button> -->
+
     <!-- <g-signin-button>
       <component
         :is="'script'"
@@ -141,6 +124,7 @@
         data-logo_alignment="left"
       ></div>
     </g-signin-button> -->
+
   </div>
 </template>
 
@@ -155,22 +139,22 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error("请输入正确的用户名"));
       } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+        callback(new Error("请输入正确的密码"));
       } else {
         callback();
       }
     };
     return {
       loginForm: {
-        username: "yyn",
-        password: "123456",
+        username: "",
+        password: "",
       },
       loginRules: {
         username: [
@@ -244,6 +228,24 @@ export default {
           // console.log("response.data.token：", response.data.data.token);
           // auth.setToken(response.data.data.token);
           // document.cookie = `token=${response.data.data.token}; path=/;`;
+
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({
+                // path: this.redirect || "/",
+                path: "/documentation/index",
+                query: this.otherQuery,
+              });
+              this.loading = false;
+
+              document.cookie = `token=${response.data.data.token}; path=/;`;
+              document.cookie = `userInfo=${response.data.data.userInfo}; path=/;`;
+              console.log("response.data.token：", response.data.data.token);
+            })
+            .catch(() => {
+              this.loading = false;
+            });
 
           this.$store
             .dispatch("user/login", this.loginForm)

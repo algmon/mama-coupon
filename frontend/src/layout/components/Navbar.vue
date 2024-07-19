@@ -85,7 +85,10 @@ export default {
     },
     async logout() {
       // await this.$store.dispatch("user/logout");
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+
       console.log(this.$route.fullPath);
     },
   },
