@@ -8,7 +8,7 @@
 ## 作品集
 ![](./cca.认知计算广告/yuanyoushe/1.red.ai.yuanyosuhe.png)
 * AI原优舍精品服饰买手店欢迎您！
-* 地址：广州市越秀区麦栏街20号野隐人工智能创新基地
+* 地址：广州市越秀区麦栏街20号算法妈妈人工智能创新基地
 
 ## 主创团队
 * Haoyu Qi, haoyu@suanfamama.com, 算法妈妈
