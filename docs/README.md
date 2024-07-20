@@ -1,37 +1,12 @@
 # 系统设计文档
-## User Management Module
-* user_management.py
-* 不存储用户密码明文，但存储密码的哈希值用于平台登录逻辑
-* 目前 不提供 删除用户 API
-
-## Advertiser Management Module
-* advertiser_management.py
-
-## Ad Management Module
-* ad_management.py
-* 广告本身以对象存储于主流厂商Key-Value对中
-* 目前 不提供 删除广告 API
-
-## Recommendation Module
+## 推荐模块 Recommendation Module
 * recommendation_management.py
-* 核心算法适配大数据环境，由SLA规定平台性能
 
-## APIs
-* 我们不使用put操作，只使用get post delete
-
-## Common HTTP status codes used in Suanfamama APIs
-### Success Codes
-* 200 OK
-* 201 Created
-* 202 Accepted
-* 204 No Content
-### Client Error Codes
-* 400 Bad Request
-* 401 Unauthorized
-* 403 Forbidden
-* 404 Not Found
-* 405 Method Not Allowed
-* 409 Conflict
-### Server Error Codes
-* 500 Internal Server Error
-* 503 Service Unavailable
+## 重要研发约定
+* 我们 遵循 Google代码编写风格
+* 我们的核心算法 适配 大数据及人工智能环境，遵循平台SLA性能规定
+* 我们 采用 Git分支管理策略，并在此基础上作创新
+* 我们 采用 MarsCode: AI Coding Assistant（国内）或Gemini Code Assist（国外）以辅助编程及算法设计
+* 我们 采用 Github Issues 和 Github Projects（即产品与项目看板）以进行产品及项目进度管理
+* 我们 设计并实现 RESTful API，并在此基础上作创新
+* 我们 采用 Docker 以使得研发-测试-部署流程更顺畅
