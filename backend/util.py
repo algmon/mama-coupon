@@ -26,10 +26,11 @@ def count_lines_of_code(file_path):
 
     return code_lines
 
+# Count # of lines of effective and core code for the product Mama Coupon
 cnt = 0
 cnt += count_lines_of_code("app.py")
-cnt += count_lines_of_code("init.py")
-cnt += count_lines_of_code("test_user_management.py")
-cnt += count_lines_of_code("user_management.py")
-cnt += count_lines_of_code("util.py")
+cnt += count_lines_of_code("mama_coupon_provider_management.py")
+cnt += count_lines_of_code("mama_coupon_consumer_management.py")
+cnt += count_lines_of_code("mama_coupon_management.py")
+cnt += count_lines_of_code("mama_coupon_recommendation_management.py")
 print(cnt) # 390

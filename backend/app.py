@@ -6,8 +6,9 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
+import mama_developer_management
+import mama_coupon_provider_management
 import user_management
-import advertiser_management
 import ad_management
 import recommendation_management
 
@@ -93,21 +94,27 @@ app.add_middleware(
 
 # 在应用程序状态中存储数据库连接
 app.state.db = None
-# 应用程序启动和关闭事件
 
-
+# 应用程序启动事件
+# app startup event
 @app.on_event("startup")
 async def startup_event():
     # 使用 app.state 来存储数据库连接
     app.state.db = get_db_connection()
+    logging.info("DB started successfully.")
+    logging.info("App started successfully.")
+    
 
-
+# 应用程序关闭事件
+# app shutdown event
 @app.on_event("shutdown")
 async def shutdown_event():
     # 检查数据库连接是否存在，并且关闭它
     db = app.state.db
     if db and not db.is_connected():
         db.close()
+    logging.info("DB shutdown successfully.")
+    logging.info("App shutdown successfully.")
 
 # 依赖项，用于获取全局数据库连接的游标
 def get_db_cursor():
@@ -123,7 +130,7 @@ app.add_middleware(Interceptor)
 @app.get("/")
 async def root():
     logging.info("Root endpoint accessed.")
-    return {"message": "Welcome! You reach the Suanfamama AIGC Cognitive Computational Advertising Platform Backend."}
+    return {"message": "欢迎你来到妈妈折扣券产品平台后端! 注：/docs可看到我们目前向外提供的API接口"}
 
 # User Management
 @app.post("/users/login")
@@ -313,34 +320,50 @@ async def update_specific_ad(request: Request):
     else:
         return {"message": "Ad update failed."}, 400
 
-# Advertiser Management
+# Mama Coupon Provider Management
 
-@app.post("/advertisers/create")
-async def create(request: Request):
+@app.post("/providers/create")
+async def create(request: Request, db: cursor.MySQLCursor = Depends(get_db_cursor)):
     """
-    Creates an ad on the platform.
+    Creates an Coupon on the platform.
 
     Args:
         prompt:
         negative_prompt:
+        seed:
 
     Returns:
         A JSON response with the status of the creation.
     """
-    logging.info("create endpoint accessed.")
+    logging.info("Provider Create endpoint accessed.")
 
     try:
         # Get data from the request body
         json_data = await request.json()
         prompt = json_data.get('prompt')
         negative_prompt = json_data.get('negative_prompt')
+        seed = json_data.get('seed')
 
-        # prompt = "a dog"
-        # negative_prompt = "hands and face"
+        # Get the MAMA_API_KEY from the request headers
+        mama_api_key = request.headers.get("MAMA_API_KEY")     
+
+        # Check if the MAMA_API_KEY is provided
+        if not mama_api_key:
+            return ErrorResponseData(401, "MAMA_API_KEY is required.")
+
+        # Validate the MAMA_API_KEY
+        developer_info = mama_developer_management.get_developer_by_key(mama_api_key, db)
+        if not developer_info:
+            return ErrorResponseData(401, "Invalid MAMA_API_KEY.")
+        else:
+            # log the developer info
+            developer_name = developer_info[1]  # Assuming developer name is at index 1
+            score_left = developer_info[5]  # Assuming score left is at index 2
+            logging.info(f"Developer {developer_name} use API key to login, score left: {score_left}")
 
         # Create an ad image
-        success = advertiser_management.create_an_ad(
-            prompt, negative_prompt, get_db_cursor())
+        success = mama_coupon_provider_management.create(
+            prompt, negative_prompt, seed, mama_api_key)
 
         if success:
             return JSONResponse(
