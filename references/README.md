@@ -12,3 +12,5 @@
 12. 如何使用Issue以管理软件项目？阮一峰, 2017年8月29日, 如何使用Issue管理软件项目？, https://www.ruanyifeng.com/blog/2017/08/issue.html
 13. RESTful API最佳实践 阮一峰, 2018年10月3日, https://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html
 14. Docker入门教程 阮一峰, 2018年2月9日, https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
+15. FastAPI, https://fastapi.tiangolo.com/tutorial
+16. Hypercorn, https://hypercorn.readthedocs.io

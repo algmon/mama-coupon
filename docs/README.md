@@ -1,4 +1,10 @@
-# 系统设计文档
+# 妈妈折扣券产品设计及系统设计文档
+## 生产者 - 消费者设计模式 The Producer Consumer Design Pattern
+* 1. 折扣券生产者会不断向算法妈妈折扣券池中生产众多折扣券，这些折扣券按某种方式进行排序。这是折扣券公共资源池；
+* 2. 折扣券消费者会不断从折扣券公共资源池中主动选择（通过搜索算法）或被动选择（通过推荐算法）准实时或实时获取源源不断的个性化折扣券；
+* 3. 算法妈妈折扣券平台的核心职责在于（1）使折扣券生产者有利可图，促成商业闭环（2）使折扣券消费者有利可赚（3）算法妈妈折扣券平台背后的股东利益及稳定流量等
+* The producer-consumer design pattern is a concurrent programming pattern that's often used in multi-threaded applications. It's used to improve data sharing between processes that produce and consume data at different rates. In the producer-consumer pattern, roles are designated as either producers or consumers. Producers add to a shared resource, while consumers remove from it. The tasks produced and consumed are kept in a shared public feed (queue) that's accessible to both producers and consumers. This pattern helps prevent data race conditions and ensures efficient data sharing.
+
 ## 推荐模块 Recommendation Module
 * recommendation_management.py
 
