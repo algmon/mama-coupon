@@ -12,11 +12,9 @@ import mama_coupon_producers_management
 import mama_coupon_consumer_management
 import mama_coupon_recommendation_management
 
-from aiChat import api_aiChat
 from common.db import get_db_connection
 from common.exception import exception
 from common.resp import SuccessResponseData, ErrorResponseData
-from fashion_video import api_fashion_video
 from mysql.connector import cursor, connect
 from fastapi import Request, HTTPException, Response
 from typing import Optional
