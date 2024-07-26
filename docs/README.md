@@ -8,6 +8,9 @@
 ## 推荐模块 Recommendation Module
 * recommendation_management.py
 
+## 重要技术路线约定
+* 使用 nixpacks 作为后端Builder Tool
+
 ## 重要研发约定
 * 我们 遵循 Google代码编写风格
 * 我们的核心算法 适配 大数据及人工智能环境，遵循平台SLA性能规定
