@@ -164,7 +164,8 @@ cython_debug/
 # mac related
 .DS_Store
 
-#config
+# local config
 config.json
+Modelfile
 
 S3.yaml
