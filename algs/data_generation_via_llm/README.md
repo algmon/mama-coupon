@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# 全栈 - 算法
-## MamaNet
-=======
 # JSON Output Example
 
 ![llmjson 2023-11-10 15_31_31](https://github.com/ollama/ollama/assets/633681/e599d986-9b4a-4118-81a4-4cfe7e22da25)
@@ -62,4 +58,3 @@ json_data = json.loads(response.text)
 
 print(json.dumps(json.loads(json_data["response"]), indent=2))
 ```
->>>>>>> 661c50520e57a5883370788dc87157e53c384ebe
