@@ -15,16 +15,16 @@
 * 地址：广州市越秀区麦栏街20号算法妈妈人工智能创新基地
 
 ## 主创团队
+* Mark, mark@suanfamama.com, 算法妈妈
 * Haoyu Qi, haoyu@suanfamama.com, 算法妈妈
 * Bin Peng, bin@suanfamama.com, 算法妈妈
-* Yongnan Yan, yongnan@suanfamama.com, 算法妈妈
 * Letian Wu, letian@suanfamama.com, 算法妈妈
 * Mama Xiao, mama@suanfamama.com, 算法妈妈
 * Wei Jiang, wei@suanfamama.com, 算法妈妈
 * Youling Zhang, youling@suanfamama.com, 算法妈妈
 * Zhaoji Hu, zhaoji@suanfamama.com, 算法妈妈
+* Zizhong Li, zizhong@suanfamama.com, 算法妈妈
 
-## 技术支持
+## 算法妈妈
 ![](./cca.认知计算广告/suanfamama/suanfamama.logo.png)
-* 算法妈妈
 * 官网：https://www.suanfamama.com/
