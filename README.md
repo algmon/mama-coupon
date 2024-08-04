@@ -2,8 +2,9 @@
 * 算法妈妈AIGC认知计算广告生成平台
 
 ## 时间节点
-* 产品内测：07月22日 - 07月27日
-* 产品公测：07月29日 - 08月03日
+* 产品内测周期1：07月22日 - 07月27日
+* 产品公测周期1：07月29日 - 08月03日
+* 产品公测周期2：08月05日 - 08月09日
 
 ## 核心功能
 * 为广告主创作有价值广告
@@ -15,14 +16,14 @@
 * 地址：广州市越秀区麦栏街20号算法妈妈人工智能创新基地
 
 ## 主创团队
+* Youling Zhang, youling@suanfamama.com, 算法妈妈
+* Wei Jiang, wei@suanfamama.com, 算法妈妈
+* Zhaoji Hu, zhaoji@suanfamama.com, 算法妈妈
 * Mark, mark@suanfamama.com, 算法妈妈
 * Haoyu Qi, haoyu@suanfamama.com, 算法妈妈
 * Bin Peng, bin@suanfamama.com, 算法妈妈
 * Letian Wu, letian@suanfamama.com, 算法妈妈
 * Mama Xiao, mama@suanfamama.com, 算法妈妈
-* Wei Jiang, wei@suanfamama.com, 算法妈妈
-* Youling Zhang, youling@suanfamama.com, 算法妈妈
-* Zhaoji Hu, zhaoji@suanfamama.com, 算法妈妈
 * Zizhong Li, zizhong@suanfamama.com, 算法妈妈
 
 ## 算法妈妈
