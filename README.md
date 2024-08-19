@@ -1,14 +1,15 @@
-# 妈里妈外
-* 算法妈妈AIGC认知计算广告生成平台
+# 妈妈折扣券
+* 基于AIGC、认知计算广告理论、认知计算时尚理论而构建
 
 ## 时间节点
-* 产品内测周期1：07月22日 - 07月27日
-* 产品公测周期1：07月29日 - 08月03日
-* 产品公测周期2：08月05日 - 08月10日
+* 产品内测 第一周：07月22日 - 07月28日
+* 产品公测 第二周：07月29日 - 08月04日
+* 产品公测 第三周：08月05日 - 08月11日
+* 产品公测 第四周：08月12日 - 08月18日
 
 ## 核心功能
-* 为广告主创作有价值广告
-* 为用户带来沉浸式有效信息流体验
+* 为广告主创作有价值折扣券
+* 为用户带来沉浸式消费体验
 
 ## 作品集
 ![](./cca.认知计算广告/yuanyoushe/1.red.ai.yuanyosuhe.png)
@@ -18,13 +19,10 @@
 ## 主创团队
 * Youling Zhang, youling@suanfamama.com, 算法妈妈
 * Wei Jiang, wei@suanfamama.com, 算法妈妈
-* Zhaoji Hu, zhaoji@suanfamama.com, 算法妈妈
-* Mark, mark@suanfamama.com, 算法妈妈
 * Haoyu Qi, haoyu@suanfamama.com, 算法妈妈
 * Bin Peng, bin@suanfamama.com, 算法妈妈
-* Letian Wu, letian@suanfamama.com, 算法妈妈
-* Mama Xiao, mama@suanfamama.com, 算法妈妈
 * Zizhong Li, zizhong@suanfamama.com, 算法妈妈
+* Mama Xiao, mama@suanfamama.com, 算法妈妈
 
 ## 算法妈妈
 ![](./cca.认知计算广告/suanfamama/suanfamama.logo.png)
