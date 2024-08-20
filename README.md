@@ -42,10 +42,8 @@
 #### 视频素材圈
 
 #### 声音素材圈
-<audio controls>
-  <source src="./design.materials/music.1.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+- (for current, github do NOT support mp3 files)
+- SEE the folder design.materials
 
 ## 理论基础 Theoretical Foundation
 * 基于AIGC Artificial Intelligence Generated Content
